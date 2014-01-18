@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+
+<style type="text/css">
+
+* {
+	border: 0; padding: 0; margin: 0; outline: 0;
+	-webkit-user-select: none;
+	cursor: default;
+}
+
+body {
+	background: #404040;
+}
+
+.clear {
+	clear: both;
+}
+
+.counter {
+	position: relative;
+	background: #b0b0b0;
+	border-radius: 12px;
+	color: white;
+	font-size: 50px;
+	font-family: sans-serif;
+	font-weight: bold;
+	text-align: center;
+	width: 90%;
+	margin-left: 5%;
+	margin-right: 5%;
+	margin-top: 20px;
+	overflow: hidden;
+}
+
+.counter .count,
+.counter .category,
+.counter .date {
+	float: left;
+	width: 100%;
+	padding-top: 20px;
+	padding-bottom: 20px;
+}
+
+.counter .count {
+	padding-bottom: 0;
+}
+
+.counter .date,
+.counter .category {
+	font-size: 24px;
+}
+
+.counter .category {
+	padding-top: 0;
+	padding-top: 0;
+}
+
+.counter .btn {
+	float: left;
+	width: 50%;
+	background: #aaaaaa;
+	cursor: pointer;
+}
+
+.counter .btn:HOVER {
+	background: #898989;
+}
+
+.history {
+	margin-top: 30px;
+}
+
+.history .entry {
+	position: relative;
+	margin-left: 5%;
+	margin-right: 5%;
+	margin-bottom: 5px;
+	width: 90%;
+	font-family: sans-serif;
+	font-size: 18px;
+	color: white;
+}
+
+.history .entry .date,
+.history .entry .count {
+	float: left;
+	width: 50%;
+}
+
+.history .entry .date {
+
+}
+
+.history .entry .count {
+	text-align: right;
+}
+
+.history_graph {
+	position: relative;
+	margin: 20px 5%;
+	width: 90%;
+	height: 300px;
+}
+
+#hider {
+	display: none;
+}
+
+
+.third {
+	float: left;
+	width: 33%;
+}
+
+.sixth {
+	float: left;
+	width: 16.6666666666%;
+}
+
+
+
+</style>
+
+
+	<script language="javascript" type="text/javascript" src="/lib/flot/jquery.js"></script>
+	<script language="javascript" type="text/javascript" src="/lib/flot/jquery.flot.js"></script>
+	<script language="javascript" type="text/javascript" src="/lib/flot/jquery.flot.time.js"></script>
+</head>
+
+
+
+<body>
+
+<ul>
+	<li>fetch/display order</li>
+	<li>unix time store instead of day timestamps</li>
+	<li>direct textfield input</li>
+</ul>
+
+<!-- hidden template content-->
+<div id="hider">
+	
+	<!-- template: counter UI -->
+	<div id="tpl-counter">
+		<div class="counter">
+			<span class="count"></span>
+			<span class="category"></span>
+			<span class="date"></span>
+			<div class="btn minus">-</div>
+			<div class="btn plus">+</div>
+			<br class="clear" />
+		</div>
+	</div>
+
+	<!-- template: history UI -->
+	<div id="tpl-history">
+		<div class="history"></div>
+	</div>
+
+	<div id="tpl-history-entry">
+		<div class="entry">
+			<span class="date"></span>
+			<span class="count"></span>
+			<br class="clear" />
+		</div>
+	</div>
+
+	<div id="tpl-history-graph">
+		<div class="history_graph"></div>
+	</div>
+
+</div>
+
+
+</body>
+
+
+<script type="text/javascript">
+
+// utility
+var util = {
+	// "YYYYMMDD" to "YYYY/MM/DD" where "/" is arg sep 
+	formatDate: function(dateStr, sep) {
+		return dateStr.substr(0, 4) + sep + dateStr.substr(4, 2) + sep + dateStr.substr(6, 2);
+	},
+
+	// "YYYYMMDD" to Unix time * 1000
+	dateToUnixMS: function(dateStr) {
+		var modStr = dateStr.substr(0, 4) + '.' + dateStr.substr(4, 2) + '.' + dateStr.substr(6, 2);
+		return new Date(modStr).getTime();
+	},
+
+	getPrevDay: function(baseDate) {
+		return new Date(baseDate.getFullYear(), baseDate.getMonth(), baseDate.getDate() - 1);
+	},
+
+	getNextDay: function(baseDate) {
+		return new Date(baseDate.getFullYear(), baseDate.getMonth(), baseDate.getDate() + 1);
+	}
+};
+
+
+
+function RemoteStorage(category) {
+
+	var cat = category;
+
+	this.setResult = function(dayStr, count) {
+		console.log(count);
+		this.getResults(function(err, data) {
+			if(err) {
+				alert('error: ' + err);
+				return;
+			}
+			var allDays = data;
+			allDays[dayStr] = count;
+
+			var ajaxReq = new XMLHttpRequest();
+			ajaxReq.open('POST', '/?category=' + cat + '&data=' + encodeURIComponent(JSON.stringify(allDays)));
+			ajaxReq.setRequestHeader('Content-type','application/x-www-form-urlencoded');
+			ajaxReq.onreadystatechange = function() {
+				if(ajaxReq.readyState === 4) {
+					console.log('remote save successful.');
+				}
+			}
+			ajaxReq.send(null);
+		});
+	}
+
+
+	// cb: onResult(err, dat)
+	this.getResults = function(cb) {
+		// remote
+		var ajaxReq = new XMLHttpRequest();
+		ajaxReq.open('GET', '/?category=' + cat);
+		ajaxReq.setRequestHeader('Accept','application/json');
+		var self = this.getResults;
+		ajaxReq.onreadystatechange = function() {
+			// TODO handle errors
+			if(ajaxReq.readyState === 4) {
+				if(cb)	cb(false, JSON.parse(ajaxReq.responseText));
+			}
+		}
+		ajaxReq.send(null);
+	}
+
+	this.getResult = function(dayStr, cb) {
+		var ajaxReq = new XMLHttpRequest();
+		ajaxReq.open('GET', '/?category=' + cat + '&timestamp=' + dayStr);
+		ajaxReq.setRequestHeader('Accept','application/json');
+
+		// TODO error handling
+		ajaxReq.onreadystatechange = function() {
+			// TODO handle errors
+			if(ajaxReq.readyState === 4) {
+				console.log('getresult: ' + dayStr + ': ' + ajaxReq.responseText)
+				if(cb)	cb(false, JSON.parse(ajaxReq.responseText));
+			}
+		}
+		ajaxReq.send(null);
+	}
+}
+
+
+function UICounter(category, allResults) {
+	var tpl_counter = document.querySelector('#tpl-counter *:FIRST-CHILD'),
+	tpl_history = document.querySelector('#tpl-history *:FIRST-CHILD'),
+	tpl_historyEntry = document.querySelector('#tpl-history-entry *:FIRST-CHILD'),
+	tpl_historyGraphContainer = document.querySelector('#tpl-history-graph *:FIRST-CHILD'),
+	body = document.querySelector('body'),
+	history = tpl_history.cloneNode(true),
+	historyGraph = tpl_historyGraphContainer.cloneNode(true),
+	counter = tpl_counter.cloneNode(true),
+	btn_plus = counter.querySelector('.plus'),
+	btn_minus = counter.querySelector('.minus'),
+	display_count = counter.querySelector('.count'),
+	display_category = counter.querySelector('.category'),
+	display_date = counter.querySelector('.date'),
+	wrap = document.createElement('div'),
+	cb = {
+		onChange: function(up) {}
+	};
+
+	wrap.appendChild(counter);
+
+	display_category.innerHTML = category;
+
+	btn_minus.onclick = btn_plus.onclick = function(evt) {
+		evt.preventDefault();
+		cb.onChange(evt.currentTarget === btn_plus);
+	}
+
+	
+
+
+	this.el = wrap;
+
+	this.setDate = function(date) {
+		display_date.innerHTML = util.formatDate(todayStr, '/');
+	};
+
+	this.setCount = function(cnt) {
+		display_count.innerHTML = cnt;
+	};
+
+	this.setCallback = function(callback) {
+		cb = callback;
+	};
+
+	this.setData = function(allResults) {
+		// set up history entries as image
+		var allResultsArr = [];
+		for(var k in allResults) {
+			allResultsArr.push({date: k, count: allResults[k]});
+		}
+		//allResultsArr.reverse();
+
+
+		// set up history graph
+		// TODO optionally fill gaps w/ zeroes
+		var graphDataArr = [];
+		for(var i=0; i<allResultsArr.length; i++) {
+			graphDataArr.push([util.dateToUnixMS(allResultsArr[i].date), allResultsArr[i].count]);
+		}
+
+		counter.appendChild(historyGraph);
+
+		if(allResultsArr.length > 0) {
+			var lblFontOpts = {
+				color: 'white',
+				family: 'sans-serif',
+				size: 12
+			};
+
+			var plotOpts = {
+
+				colors: ['white'],
+
+				grid: {
+					color: 'rgba(0,0,0,0.0)',
+					backgroundOpacity: 0
+				},
+
+				xaxis: {
+					font: lblFontOpts,
+
+					mode: 'time',
+					timeformat: '%m/%d',
+					minTickSize: [1, "day"],
+		            min: (new Date(util.formatDate(allResultsArr[0].date, '-'))).getTime(),
+		            max: util.getNextDay(new Date(util.formatDate(allResultsArr[allResultsArr.length - 1].date, '-')))
+				},
+
+				yaxis: {
+					font: lblFontOpts
+				}
+			};
+
+
+
+
+		// TODO debug hack, cannot plot before div is layouted with width and height
+			setTimeout(function() {
+				$.plot(historyGraph, [ graphDataArr ], plotOpts)
+
+			}, 100);
+
+
+			// display history entries
+			for(var i=0; i<allResultsArr.length; i++) {
+				var e = tpl_historyEntry.cloneNode(true);
+					e.querySelector('.date').innerHTML = util.formatDate(allResultsArr[i].date, '/');
+					e.querySelector('.count').innerHTML = allResultsArr[i].count;
+				history.appendChild(e);
+			}
+
+			wrap.appendChild(history);
+		} // if entries available
+	}
+}
+
+
+
+var SimpleController = function(category) {
+
+	// store today's value
+	var value =  0;
+
+	var ui = new UICounter(category);
+
+	// calc today's timestamp, fill leading zeroes
+	var today = new Date(), y = today.getFullYear(), m = today.getMonth() + 1, d = today.getDate();
+	if(m < 10)	m = '0' + m;
+	if(d < 10)	d = '0' + d;
+	todayStr = y + '' + m + '' + d;
+
+	// get body reference
+	var body = document.querySelector('body');
+
+	// init core components
+	var lg = new RemoteStorage(category);
+
+	lg.getResults(onResultsRetrieved);
+	
+
+
+	function onResultsRetrieved(err, data) {
+
+		ui.setData(data);
+		ui.setCallback({onChange: onUIChange});
+		ui.setDate(today);
+
+		// publish DOM element reference
+		this.el = ui.el;
+		this.el.className = 'third';
+		this.el.className = 'sixth';
+
+		var todayValue = data[todayStr] || 0;
+		ui.setCount(todayValue);
+		value = todayValue;
+
+		// TODO move ext
+		body.appendChild(ui.el);
+
+	} // end onResultsRetrieved
+
+	function onUIChange(up) {
+		if(!up && value <= 0) return;
+		value += up ? 1 : -1;
+		ui.setCount(value);
+		lg.setResult(todayStr, value);
+	}
+}
+
+
+
+// test flot!!!!!
+
+$(function() {
+
+	new SimpleController('pushups')
+	new SimpleController('pushups_MAX')
+	new SimpleController('lifts_10kg')
+	new SimpleController('lifts_10kg_MAX')
+	new SimpleController('crunches')
+	new SimpleController('crunches_MAX')
+
+		
+
+
+		
+	});
+	
+</script>
+
+
+</html>
