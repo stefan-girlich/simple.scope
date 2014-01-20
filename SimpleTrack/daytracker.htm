@@ -199,8 +199,20 @@ var util = {
 
 	getNextDay: function(baseDate) {
 		return new Date(baseDate.getFullYear(), baseDate.getMonth(), baseDate.getDate() + 1);
+	},
+
+	// ts: YYYYMMDD
+	getDateFromTimestamp: function(ts) {
+		return new Date(util.formatDate(ts, '-'));
 	}
 };
+
+Date.prototype.yyyymmdd = function() {
+   var yyyy = this.getFullYear().toString();
+   var mm = (this.getMonth()+1).toString(); // getMonth() is zero-based
+   var dd  = this.getDate().toString();
+   return yyyy + (mm[1]?mm:"0"+mm[0]) + (dd[1]?dd:"0"+dd[0]); // padding
+  };
 
 
 
@@ -209,7 +221,7 @@ function RemoteStorage(category) {
 	var cat = category;
 
 	this.setResult = function(dayStr, count) {
-		console.log(count);
+
 		this.getResults(function(err, data) {
 			if(err) {
 				alert('error: ' + err);
@@ -293,9 +305,6 @@ function UICounter(category, allResults) {
 		cb.onChange(evt.currentTarget === btn_plus);
 	}
 
-	
-
-
 	this.el = wrap;
 
 	this.setDate = function(date) {
@@ -311,8 +320,30 @@ function UICounter(category, allResults) {
 	};
 
 	this.setData = function(allResults) {
-		// set up history entries as image
+
+		var allResultsKeys = Object.keys(allResults);
+
+		var lastDate =  util.getDateFromTimestamp(allResultsKeys[allResultsKeys.length-1]);
+
+		// TODO do only for graphDataArr instead of adding and later ignoring zeroes
+		// zero fill data gaps between dates
+		// assuming keys are in numeric order
+		for(var i=0; i<allResultsKeys.length; i++) {	// don't iterate last one
+
+			var nextDay = util.getNextDay(util.getDateFromTimestamp(allResultsKeys[i]));	// TODO avoid code like this by making functions versatile: uttil.getNextDay could accept all sorts of args!
+
+			var todayDate = new Date();
+			while((nextDay < lastDate || nextDay < todayDate) && !allResults[nextDay.yyyymmdd()]) {
+				console.log('... ' + nextDay)
+				allResults[nextDay.yyyymmdd()] = 0;
+				nextDay = util.getNextDay(nextDay);
+			}
+		}
+
+
+		// set up history entries as array
 		var allResultsArr = [];
+
 		for(var k in allResults) {
 			allResultsArr.push({date: k, count: allResults[k]});
 		}
@@ -371,6 +402,7 @@ function UICounter(category, allResults) {
 
 			// display history entries
 			for(var i=0; i<allResultsArr.length; i++) {
+				if(allResultsArr[i].count === 0) continue;
 				var e = tpl_historyEntry.cloneNode(true);
 					e.querySelector('.date').innerHTML = util.formatDate(allResultsArr[i].date, '/');
 					e.querySelector('.count').innerHTML = allResultsArr[i].count;
@@ -442,11 +474,11 @@ var SimpleController = function(category) {
 $(function() {
 
 	new SimpleController('pushups')
-	new SimpleController('pushups_MAX')
-	new SimpleController('lifts_10kg')
-	new SimpleController('lifts_10kg_MAX')
-	new SimpleController('crunches')
-	new SimpleController('crunches_MAX')
+	//new SimpleController('pushups_MAX')
+	//new SimpleController('lifts_10kg')
+	//new SimpleController('lifts_10kg_MAX')
+	//new SimpleController('crunches')
+	//new SimpleController('crunches_MAX')
 
 		
 
