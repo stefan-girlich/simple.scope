@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+
+<link href="website.css" rel="stylesheet" type="text/css" media="screen">
+
+<script src="jquery-1.8.2.min.js"></script>
+<script>
+$(function() {
+	var num_boxes = 6;
+	$('#header').append($('<div class="colorboxes" />'));
+	for(var i=0; i<num_boxes; i++) {
+		$('.colorboxes').append($('<div class="hidden color'+i+'" />').css('left', i * 50));
+	}
+	$('#header').append($('<h1 class="hidden">simplescope</h1><h2 class="hidden">a minimalist task organizer.</h2>'));
+	var colored_boxes = $('#header .colorboxes div'),
+		curr_box_ix = 0;
+	var timer = setInterval(function() {
+		if(curr_box_ix > num_boxes ) {
+			clearInterval(timer);
+		}
+		colored_boxes.eq(curr_box_ix).removeClass('hidden');
+		curr_box_ix++;
+	}, 77);
+	
+	setTimeout(function() {
+		$('#header h1, #header h2').removeClass('hidden');
+	}, 10);
+	
+	$('.usecase img').each(function() {
+		$(this).replaceWith($('<div class="icon '+$(this).attr('class')+'" />'));
+	});
+});
+
+</script>
+
+
+
+<title>simplescope. &ndash; a minimalist task organizer</title>
+</head>
+<body>
+
+<div id="wrap">
+	<div id="header">
+	<noscript>
+		<h1>simplescope</h1>
+		<h2>a minimalist task organizer.</h2>
+		<!--  TODO add noscript graphics -->
+		
+	</noscript>
+	</div>
+	<div id="content">
+		<p class="lang_de">Als Softwareentwickler verbringe ich viel Zeit mit dem Zerlegen von Problemen in Teilaufgaben, dem Abhaken von To-Do-Listen und allgemein der Organisation meines eigenen Workflows. <strong>simplescope.</strong> ist ein simples Offline-Tool zum Notieren, Priorisieren und Organisieren kleiner Aufgaben, derzeit lauff&auml;hig in den Desktop-Browsern <a href="">Chromium</a>, <a href="">Chrome</a> und <a href="">Safari</a>.</p>
+		
+		<div class="panel">
+			<h3 class="lang_de">was kann simplescope?</h3>
+			<p class="lang_de">Nicht viel, und das ist gut so. <strong>simplescope</strong> erlaubt es Aufgaben als kurze Textnotizen zu organisieren und zu speichern.</p>
+			
+			<div class="usecase"><img class="icon add" />
+				<span class="text lang_de"><div><p>Benutze Trenner, um Gruppen von Aufgaben abzugrenzen. Ein Trenner wird erstellt, wenn du eine Aufgabe ohne Text hinzuf&uuml;gst.</p></div></p></span>
+			</div>
+			
+			<div class="usecase">
+				<img class="icon"/></a>
+				<div class="text lang_de"><div><p>Ziehe und verschiebe einzelne Aufgaben</p></div></div>
+			</div>
+			<div class="usecase"><img class="icon"/></a>
+				<span class="text lang_de">Bearbeite und l&ouml;sche Aufgaben per Klick auf die beiden Buttons. </span>
+			</div>
+			<div class="usecase"><img class="icon"/></a>
+				<span class="text lang_de">Markiere Aufgaben farblich, indem du dein Mausrad &uuml;ber dem Eintrag benutzt.</span>
+			</div>
+			<div class="usecase"><img class="icon"/></a>
+				<span class="text lang_de">Markiere Aufgaben farblich, indem du dein Mausrad &uuml;ber dem Eintrag benutzt.</span>
+			</div>
+
+		</div>
+		
+		
+		<div class="panel">
+			<h3 class="lang_de">wie benutze ich simplescope?</h3>
+			<p class="lang_de">somethingsomethingsomething</p>
+		
+		</div>
+	
+	
+	</div>
+	<div id="footer">
+	
+	
+	</div>
+</div>
+
+
+
+</body>
+</html>
