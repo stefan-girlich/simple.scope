@@ -87,7 +87,8 @@ simplescope.model = new function Model() {
 					new simplescope.Entry('Move entries by dragging them.', 5),
 					new simplescope.Entry('Edit or delete entries using the buttons.', 4),
 					new simplescope.Entry('Use your mouse wheel to change colors.', 3),
-					new simplescope.Entry('Create empty notes as separators.', 1),
+					new simplescope.Entry('Create empty notes as separators:', 1),
+					new simplescope.Entry('', 0),
 					new simplescope.Entry('Everything is stored only in your current web browser.', 2)
 		      ])
 		];
