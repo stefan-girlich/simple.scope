@@ -80,8 +80,8 @@ simplescope.model = new function Model() {
 	var session_data_dummy = [
 		       new simplescope.Column([
 		        	new simplescope.Entry('simple.scope', 1),
-		        	new simplescope.Entry('is a lightweight tool for takes notes.', 0),
-		        	new simplescope.Entry('Create new entries using the bottom boxes.', 2)
+		        	new simplescope.Entry('is a lightweight tool for taking notes.', 0),
+		        	new simplescope.Entry('Create new entries using the bottom text fields.', 2)
 		       ]),
 		       new simplescope.Column([
 					new simplescope.Entry('Move entries by dragging them.', 5),
