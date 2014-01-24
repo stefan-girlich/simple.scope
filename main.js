@@ -79,16 +79,16 @@ simplescope.model = new function Model() {
 	var session_data = {};
 	var session_data_dummy = [
 		       new simplescope.Column([
-		        	new simplescope.Entry('Abwasch!!', 2),
-		        	new simplescope.Entry('Küche saubermachen', 1),
-		        	new simplescope.Entry('Rechnungen', 3)
+		        	new simplescope.Entry('simple.scope', 1),
+		        	new simplescope.Entry('is a lightweight tool for takes notes.', 0),
+		        	new simplescope.Entry('Create new entries using the bottom boxes.', 2)
 		       ]),
 		       new simplescope.Column([
-					new simplescope.Entry('Carlo', 2),
-					new simplescope.Entry('Cokxxx!!', 0),
-					new simplescope.Entry('Nuttn!!', 3),
-					new simplescope.Entry('Isch komm auf die Party', 1),
-					new simplescope.Entry('und mach Stress ohne Grund.', 2)
+					new simplescope.Entry('Move entries by dragging them.', 5),
+					new simplescope.Entry('Edit or delete entries using the buttons.', 4),
+					new simplescope.Entry('Use your mouse wheel to change colors.', 3),
+					new simplescope.Entry('Create empty notes as separators.', 1),
+					new simplescope.Entry('Everything is stored only in your current web browser.', 2)
 		      ])
 		];
 	
