@@ -1,18 +1,16 @@
 var simplescope = {};
 
 simplescope.factory = new function Factory() {
-	
-	var fnct_buildPlaceholder = function(attr_class) {
-		if(!attr_class)	attr_class = '';
-		return $('<div class="entry placeholder ' + attr_class + '"></div>');
+
+	this.buildPlaceholder = function(attr_class) {
+		return $('<div class="entry placeholder ' + (attr_class || '') + '"></div>');
 	};
-	
-	var fnct_buildColumn = function(attr_class) {
-		if(!attr_class)	attr_class = '';
-		return $('<div class="col ' + attr_class + '"></div>');
+
+	this.buildColumn = function(attr_class) {
+		return $('<div class="col ' + (attr_class || '') + '"></div>');
 	};
-	
-	var fnct_buildEntry = function(label, color) {
+
+	this.buildEntry	= function(label, color) {
 		var is_sep = !label || label.length <= 0 ? ' separator ' : '';
 		return $('<div class="entry color' + color +is_sep+'">' +
 						'<span class="label">'+label+'</span>' +
@@ -22,22 +20,14 @@ simplescope.factory = new function Factory() {
 				)
 				.data('label', label).data('color', color);
 	};
-	
-	var fnct_buildAddPanel = function(attr_class) {
-		if(!attr_class)	attr_class = '';
-		return $('<div class="panel ' + attr_class + '"><div class="btn add"></div><input type="text" class="tf" /></div>');
+
+	this.buildAddPanel	 = function(attr_class) {
+		return $('<div class="panel ' + (attr_class || '') + '"><div class="btn add"></div><input type="text" class="tf" /></div>');
 	};
-	
-	var fnct_buildEntryTextfield = function(attr_class, value) {
-		if(!attr_class)	attr_class = '';
-		return $('<input type="text" class="tf ' + attr_class + '" value="'+value+'"/><br class="clear" />');
+
+	this.buildEntryTextfield = function(attr_class, value) {
+		return $('<input type="text" class="tf ' + (attr_class || '') + '" value="'+value+'"/><br class="clear" />');
 	};
-	
-	this.buildPlaceholder = fnct_buildPlaceholder;
-	this.buildColumn	 = fnct_buildColumn;
-	this.buildEntry	 = fnct_buildEntry;
-	this.buildAddPanel	 = fnct_buildAddPanel;
-	this.buildEntryTextfield = fnct_buildEntryTextfield;
 	
 	return this;
 };
@@ -45,15 +35,13 @@ simplescope.factory = new function Factory() {
 simplescope.Column = function Column(entries) {
 	var entries = Array.isArray(entries) ? entries : [];
 	
-	var fnct_getEntries = function() {
+	this.getEntries = function() {
 		return entries;
 	};
-	var fnct_add = function(entry) {
+
+	this.add = function(entry) {
 		entries.push(entry);
-	}
-	;
-	this.getEntries = fnct_getEntries;
-	this.add = fnct_add;
+	};
 	
 	this.simplify = function() {
 		var res = [];
@@ -70,6 +58,7 @@ simplescope.Entry = function Entry(label, col) {
 	this.color = col;
 	
 	var self = this;
+
 	this.simplify = function() {
 		return {'label':self.label, 'color':self.color};
 	}
@@ -77,6 +66,8 @@ simplescope.Entry = function Entry(label, col) {
 
 simplescope.model = new function Model() {
 	var session_data = {};
+
+	// dummy data
 	var session_data_dummy = [
 		       new simplescope.Column([
 		        	new simplescope.Entry('simple.scope', 1),
@@ -93,10 +84,13 @@ simplescope.model = new function Model() {
 		      ])
 		];
 	
-	// DUMMY fill localStorage
-	if(!localStorage.getItem('current'))	localStorage.setItem('current', JSON.stringify([session_data_dummy[0].simplify(), session_data_dummy[1].simplify()]));
+	// no record exists, use dummy data
+	if(!localStorage.getItem('current')) {
+		localStorage.setItem('current', JSON.stringify([session_data_dummy[0].simplify(), session_data_dummy[1].simplify()]));
 
-	if(localStorage.getItem('current')) {
+	// record exists, load
+	}else {
+
 		session_data = $.parseJSON(localStorage.getItem('current'));
 		var tmp_sd = []; 
 		for(var i=0; i<session_data.length; i++) {	// for all columns
@@ -111,6 +105,8 @@ simplescope.model = new function Model() {
 		console.log('empty current data set!')
 	}
 	
+	// TODO NAMING
+
 	this.restoreData = function() {
 		return session_data;
 	};
