@@ -1,11 +1,6 @@
 var simplescope = {};
 
-
-simplescope.model = new function Model() {
-	var session_data = {};
-
-	// dummy data
-	var session_data_dummy = [
+/** TODO convert default dummy text to new API
 		       new simplescope.Column([
 		        	new simplescope.Entry('simple.scope', 1),
 		        	new simplescope.Entry('is a lightweight tool for taking notes.', 0),
@@ -20,48 +15,8 @@ simplescope.model = new function Model() {
 					new simplescope.Entry('Everything is stored only in your current web browser.', 2)
 		      ])
 		];
-	
-	// no record exists, use dummy data
-	if(!localStorage.getItem('current')) {
-		localStorage.setItem('current', JSON.stringify([session_data_dummy[0].simplify(), session_data_dummy[1].simplify()]));
 
-	// record exists, load
-	}else {
-
-		session_data = $.parseJSON(localStorage.getItem('current'));
-		var tmp_sd = []; 
-		for(var i=0; i<session_data.length; i++) {	// for all columns
-			var tmp_col = new simplescope.Column();
-			for(var j=0; j<session_data[i].length; j++) {	// for all entries
-				tmp_col.add(new simplescope.Entry(session_data[i][j].label, session_data[i][j].color));
-			}
-			tmp_sd.push(tmp_col);
-		}
-		session_data = tmp_sd;
-	}
-	
-	// TODO NAMING
-
-	this.restoreData = function() {
-		return session_data;
-	};
-	
-	this.storeData = function(cols_entries) {
-		session_data = cols_entries;
-		// session data corrupt here!!!!
-		var simpler = [];
-		for(var i=0; i<session_data.length; i++) {
-			simpler.push(session_data[i].simplify());
-		}
-		
-		localStorage.setItem('current', JSON.stringify(simpler));
-	}
-	
-	this.getDataEntry = function(col_ix, entry_ix) {
-		return session_data[col_ix][entry_ix];
-	};
-};	// simplescope.Model
-
+	*/
 
 
 
