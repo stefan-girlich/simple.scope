@@ -69,9 +69,7 @@ simplescope.ui.Root = function Root(cols) {
 
 	this.setCallback = function(callback) {
 		cb = callback || {
-			onChange: function() {
-				cb.onChange();
-			}
+			onChange: function() {}
 		};
 	}
 	
@@ -129,8 +127,6 @@ simplescope.ui.Root = function Root(cols) {
 			duration: 100,
 			complete: function() {
 
-				console.log('complete yo.')
-			
 				drag_el.removeClass('floating');
 				drag_el.removeClass('mouseDisabled');
 				drag_el.css({
@@ -184,7 +180,7 @@ simplescope.ui.Column = function Column(entries) {
 			}
 		},
 		cb,		// callback for this Column
-		$placeholders,		// all placeholders
+		$placeholders = null,		// all placeholders
 		$phActive = null;	// currently active placeholder
 
 
@@ -236,11 +232,15 @@ simplescope.ui.Column = function Column(entries) {
 	this.onEntryDragLeave = function(evt) {
 		$phActive = null;
 		$placeholders.css('height', 0);
+		$placeholders.each(function() {
+			console.log($(this).index() + '   ' + $(this).css('height'));
+		})
+
 		console.log('left...')
 	}
 
 	this.updatePlaceholders = function() {
-		$placeholders.detach();
+		if($placeholders)	$placeholders.detach();
 
 		self.$el.prepend($('<div class="entry placeholder"></div>'));	// TODO REDUNDANT
 
@@ -257,14 +257,12 @@ simplescope.ui.Column = function Column(entries) {
 	this.$el = $('<div class="col"></div>');	// root element
 
 
-	// initialize entries: callbacks, add elements and placeholders to DOM
-	this.$el.append($('<div class="entry placeholder"></div>'));
+	// initialize entries: callbacks, add elements o DOM
 	for(var i=0; i<entries.length; i++) {
 		entries[i].setCallback(cbEntries);
 		this.$el.append(entries[i].$el);
-		console.log(entries[i])
-		this.$el.append($('<div class="entry placeholder"></div>'));
 	}
+	this.updatePlaceholders();
 
 	$placeholders = this.$el.children('.placeholder');	// TODO cool way to collect refs on creation?
 
@@ -283,8 +281,6 @@ simplescope.ui.Entry = function Entry(label, color, callback) {
 
 	var label = label || null, color = color || 0,
 		cb;
-
-		console.log('label: ' + label)
 
 	// === API ===
 
