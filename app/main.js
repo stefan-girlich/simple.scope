@@ -101,8 +101,6 @@ simplescope.model = new function Model() {
 			tmp_sd.push(tmp_col);
 		}
 		session_data = tmp_sd;
-	}else {
-		console.log('empty current data set!')
 	}
 	
 	// TODO NAMING
