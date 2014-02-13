@@ -1,36 +1,5 @@
 var simplescope = {};
 
-simplescope.Column = function Column(entries) {
-	var entries = Array.isArray(entries) ? entries : [];
-	
-	this.getEntries = function() {
-		return entries;
-	};
-
-	this.add = function(entry) {
-		entries.push(entry);
-	};
-	
-	this.simplify = function() {
-		var res = [];
-		for(var i=0; i<entries.length; i++) {
-			res.push(entries[i].simplify());
-		}
-		return res;
-	};
-};
-
-simplescope.Entry = function Entry(label, col) {
-	
-	this.label = label;
-	this.color = col;
-	
-	var self = this;
-
-	this.simplify = function() {
-		return {'label':self.label, 'color':self.color};
-	}
-};
 
 simplescope.model = new function Model() {
 	var session_data = {};
