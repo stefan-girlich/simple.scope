@@ -1,25 +1,44 @@
 var simplescope = {};
 
-/** TODO convert default dummy text to new API
-		       new simplescope.Column([
-		        	new simplescope.Entry('simple.scope', 1),
-		        	new simplescope.Entry('is a lightweight tool for taking notes.', 0),
-		        	new simplescope.Entry('Create new entries using the bottom text fields.', 2)
-		       ]),
-		       new simplescope.Column([
-					new simplescope.Entry('Move entries by dragging them.', 5),
-					new simplescope.Entry('Edit or delete entries using the buttons.', 4),
-					new simplescope.Entry('Use your mouse wheel to change colors.', 3),
-					new simplescope.Entry('Create empty notes as separators:', 1),
-					new simplescope.Entry('', 0),
-					new simplescope.Entry('Everything is stored only in your current web browser.', 2)
-		      ])
-		];
+simplescope.dummydata = {
 
-	*/
+	'introduction':		[
+
+		[	// column 1
+			{label: 'simple.scope', color: 1},
+			{label: 'is a lightweight tool for taking notes.', color: 0},
+			{label: 'Create new entries using the bottom text fields.', color: 2}
+		],
+
+		[	// column 2
+			{label: 'Move entries by dragging them.', color: 5},
+			{label: 'Edit or delete entries using the buttons.', color: 4},
+			{label: 'Use your mouse wheel to change colors.', color: 3},
+			{label: 'Create empty notes as separators:', color: 1},
+			{label: '', color: 0},
+			{label: 'Everything is stored only in your current web browser.', color: 2}
+		]
+	]
+};
 
 
+simplescope.db = {};
 
+
+// TODO check for localstorage
+
+simplescope.db.LocalStorage = function LocalStorage(storageKey) {
+	storageKey = storageKey || 'simplescope.localstorage_default';
+
+	this.save = function(data) {
+		localStorage.setItem(storageKey, data);
+	}
+
+	this.load = function() {
+		var data = localStorage.getItem(storageKey);
+		return data ? data : null;
+	}
+};
 
 
 simplescope.ui = {};
@@ -318,9 +337,10 @@ simplescope.ui.Entry = function Entry(label, color, callback) {
 
 
 	// initialize UI elements
+	// TODO init through setter in favor of checks?
 	var is_sep = !label || label.length <= 0 ? ' separator ' : '';
 	this.$el = $('<div class="entry color' + color +is_sep+'"></div>');
-	var $label = $('<span class="label">'+label+'</span>'),
+	var $label = $('<span class="label">'+(is_sep ? '' : label)+'</span>'),
 		$btn_edit = $('<div class="btn edit start_edit"></div>'),
 		$btn_del = $('<div class="btn delete start_delete"></div>'),
 		$btn_acc = $('<div class="btn decline"></div>'),
@@ -382,23 +402,30 @@ $(function() {
 	/* !!!!!!!!!!!!!!!!!  DEBUG  !!!!!!!!!!!!!!!!! 
 	dummy data */
 
-	var test_entries = [
-		new simplescope.ui.Entry('testee!', 2),
-		new simplescope.ui.Entry('wesh wesh?!', 0),
-		new simplescope.ui.Entry('was geht?', 4),
-		new simplescope.ui.Entry('que pasa?', 5),
-		new simplescope.ui.Entry('SUP?!', 1),
-	];
+	var storage = new simplescope.db.LocalStorage(),
+		data = storage.load();
 
-	var test_cols = [
-		new simplescope.ui.Column(test_entries.slice(0,3)),
-		new simplescope.ui.Column(test_entries.slice(3))
-	];
+	if(!data) {
+		data = simplescope.dummydata.introduction;
+	}
 
-	var content = new simplescope.ui.Root(test_cols);
-	body.append(content.$el);
+	var columns = [];
+	for(var i=0; i<data.length; i++) {
+		var colDat = data[i],
+			entries = [];
 
-	content.setCallback({onChange: onUiChange});
+		for(var j=0; j<colDat.length; j++) {
+			entries.push(new simplescope.ui.Entry(colDat[j].label, colDat[j].color));
+		}
+
+		columns.push(new simplescope.ui.Column(entries));
+	}
+
+
+	var root = new simplescope.ui.Root(columns);
+	body.append(root.$el);
+
+	root.setCallback({onChange: onUiChange});
 
 	function onUiChange() {
 		alert('change!!!!!!!')
