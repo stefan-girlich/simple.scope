@@ -94,6 +94,10 @@ simplescope.model = new function Model() {
 };	// simplescope.Model
 
 
+
+
+
+
 simplescope.ui = {};
 
 simplescope.ui.Root = function Root(cols) {
@@ -216,6 +220,11 @@ simplescope.ui.Root = function Root(cols) {
 
 				$dropPlaceholder = null;
 
+
+				for(var i=0; i<cols.length; i++) {
+					cols[i].updatePlaceholders();
+				}
+
 				// TODO handle
 				if(drag_el.position().left == dragstart_pos.x
 						&& drag_el.position().top == dragstart_pos.y) {
@@ -306,8 +315,16 @@ simplescope.ui.Column = function Column(entries) {
 		console.log('left...')
 	}
 
-	this.getPlaceholder = function(ix) {
-		return $placeholders.eq(ix);
+	this.updatePlaceholders = function() {
+		$placeholders.detach();
+
+		self.$el.prepend($('<div class="entry placeholder"></div>'));	// TODO REDUNDANT
+
+		self.$el.children('.entry').not('.placeholder').each(function() {
+			$(this).after($('<div class="entry placeholder"></div>'));	// TODO REDUNDANT
+		});
+
+		$placeholders = self.$el.children('.placeholder');
 	}
 
 
