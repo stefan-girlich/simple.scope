@@ -56,12 +56,19 @@ simplescope.ui.Root = function Root(cols) {
 			$(window).mouseup(onWindowDragStop);
 
 			for(var i=0; i<cols.length; i++) {
-				cols[i].$el.mouseleave(cols[i].onEntryDragLeave);
+				cols[i].$el.mouseleave(cols[i].resetPlaceholders);
 			}
 		},
 
 		onDropPositionChange: function(col, ph) {
-			$dropPlaceholder = ph;
+			$dropPlaceholder = ph;	// store curr placeholder ref
+
+			// for all Columns but the active one: reset placeholders
+			for(var i=0; i<cols.length; i++) {
+				if(cols[i] !== col) {
+					cols[i].resetPlaceholders();
+				}
+			}
 		}
 	},
 	cb;
@@ -100,6 +107,7 @@ simplescope.ui.Root = function Root(cols) {
 				min_dist = tmp_dist;
 			}
 		}
+
 		closestCol.onEntryDrag(draggedEntry, evt);
 	}	// onWindowMouseDrag
 
@@ -112,7 +120,7 @@ simplescope.ui.Root = function Root(cols) {
 		$(window).unbind('mouseup', onWindowDragStop);
 
 		for(var i=0; i<cols.length; i++) {
-			cols[i].$el.unbind('mouseleave', cols[i].$el.onEntryDragLeave);
+			cols[i].$el.unbind('mouseleave', cols[i].$el.resetPlaceholders);
 		}
 
 		if(typeof $dropPlaceholder === 'undefined') {
@@ -160,6 +168,8 @@ simplescope.ui.Root = function Root(cols) {
 
 
 simplescope.ui.Column = function Column(entries) {
+
+var blub = Math.random();
 
 	var self = this;
 
@@ -219,8 +229,6 @@ simplescope.ui.Column = function Column(entries) {
 
 		$placeholders.css('height', 0);
 
-
-
 		$phClosest.css('height', drag_el.outerHeight(true));
 
 		// TODO fire only if there is an actual change
@@ -229,16 +237,14 @@ simplescope.ui.Column = function Column(entries) {
 		$phActive = $phClosest;
 	}
 
-	this.onEntryDragLeave = function(evt) {
+	/** Sets all existing placeholders to their default state. */
+	this.resetPlaceholders = function(evt) {
 		$phActive = null;
 		$placeholders.css('height', 0);
-		$placeholders.each(function() {
-			console.log($(this).index() + '   ' + $(this).css('height'));
-		})
-
-		console.log('left...')
 	}
 
+	/** Removes all existing placeholders and creates new default 
+	placeholders for all Entries in this Column. */
 	this.updatePlaceholders = function() {
 		if($placeholders)	$placeholders.detach();
 
