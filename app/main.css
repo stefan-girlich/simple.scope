@@ -106,7 +106,7 @@ overflow-x: hidden;
 
 .col .entry .btn:HOVER,
 .col .panel .btn:HOVER {
-	background-color: white;
+	background-color: rgba(0,0,0,0.2);
 }
 
 .col .entry.floating .btn {
