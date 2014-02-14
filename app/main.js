@@ -422,24 +422,61 @@ simplescope.ui.Entry = function Entry(label, color, callback) {
 	var $label = $('<span class="label">'+(is_sep ? '' : label)+'</span>'),
 		$btn_edit = $('<div class="btn edit start_edit"></div>'),
 		$btn_del = $('<div class="btn delete start_delete"></div>'),
-		$btn_acc = $('<div class="btn decline"></div>'),
-		$btn_decl = $('<div class="btn accept"></div>');
+		$btn_acc = $('<div class="btn accept"></div>'),
+		$btn_decl = $('<div class="btn decline"></div>');
 
 	this.$el.append($label, $btn_edit, $btn_del, $btn_acc, $btn_decl);
 
 
+	$btn_edit.click(onButtonClick);
+	$btn_del.click(onButtonClick);
+	$btn_decl.click(onButtonClick);
+	$btn_acc.click(onButtonClick);
 
-	// attach handlers
 
-	$btn_edit.click(function(evt) {
-		// TODO setLabel
-		cb.onEdit(label, color)
-	});
+	var buffAction = null;
 
-	$btn_del.click(function(evt) {
-		cb.onDelete();
-	});
+	function onButtonClick(evt) {
 
+		var t = evt.target;
+
+		if(t === $btn_edit[0]) {
+			toggleSafetyCtrl(true);
+			buffAction = 'edit';
+		}else if(t === $btn_del[0]) {
+			toggleSafetyCtrl(true);
+			buffAction = 'delete';
+		}else if(t === $btn_decl[0]) {
+			toggleSafetyCtrl(false);
+			buffAction = null;
+		}else if(t === $btn_acc[0]) {
+			toggleSafetyCtrl(false);
+			if(buffAction === 'edit') {
+				alert('TODO trigger edit action')
+			}else if(buffAction === 'delete') {
+				alert('TODO trigger delete action')
+			}
+		}
+	}
+
+
+	function toggleSafetyCtrl(active) {
+		// TODO cooler way? refs to .hide and .show?
+		if(active) {
+			$btn_edit.hide();
+			$btn_del.hide();
+			$btn_acc.show();
+			$btn_decl.show();
+		}else {
+			$btn_edit.show();
+			$btn_del.show();
+			$btn_acc.hide();
+			$btn_decl.hide();
+		}
+
+	}
+
+	// TODO refactor in named method
 	this.$el.mousedown(function(evt) {
 
 		var el = self.$el;
