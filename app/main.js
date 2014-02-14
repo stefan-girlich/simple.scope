@@ -60,7 +60,7 @@ simplescope.ui.Root = function Root(cols) {
 	var dragstart_offset,	// mousedown offset (px) relative to Entry element
 		dragstart_pos,		// original Entry element position before mousedown
 		draggedEntry = null,	// currently dragged Entry
-		dropPlaceholder = null;	// the placeholder currently closest to the dragged Entry element
+		$dropPlaceholder = null;	// the placeholder currently closest to the dragged Entry element
 
 
 	var cbCols = {			// callback for all Columns
@@ -142,7 +142,7 @@ simplescope.ui.Root = function Root(cols) {
 
 	function onWindowDragStop(evt) {
 
-		var drag_el = draggedEntry.$el;
+		var $drag_el = draggedEntry.$el;
 
 		$(window).unbind('mousemove', onWindowMouseDrag);
 		$(window).unbind('mouseup', onWindowDragStop);
@@ -156,22 +156,28 @@ simplescope.ui.Root = function Root(cols) {
 			return;
 		}
 
-		drag_el.stop().animate({
+		// element is not dragged anymore, animated it to its new position
+		$drag_el.stop().animate({
 			left: $dropPlaceholder.position().left,
 			top: $dropPlaceholder.position().top
 		}, {
 			duration: 100,
 			complete: function() {
 
-				drag_el.removeClass('floating');
-				drag_el.removeClass('mouseDisabled');
-				drag_el.css({
+				// when the animation is completed: restore the overall default state
+
+				$drag_el.removeClass('floating');
+				$drag_el.removeClass('mouseDisabled');
+				$drag_el.css({
 					left: 'auto',
 					top: 'auto'
 				});
 
-				drag_el.removeAttr('style');
-				drag_el.insertBefore($dropPlaceholder);
+				// drop inline styles TODO necessary?
+				$drag_el.removeAttr('style');
+
+				// replace target placeholder
+				$drag_el.insertBefore($dropPlaceholder);
 				$dropPlaceholder.detach();
 
 				$dropPlaceholder = null;
@@ -180,11 +186,13 @@ simplescope.ui.Root = function Root(cols) {
 					cols[i].updatePlaceholders();
 				}
 
+
+
 				cb.onChange();
 
 				// TODO handle
-				if(drag_el.position().left == dragstart_pos.x
-						&& drag_el.position().top == dragstart_pos.y) {
+				if($drag_el.position().left == dragstart_pos.x
+						&& $drag_el.position().top == dragstart_pos.y) {
 					console.log('ENTRY CLICKED OBSOLETE (?)')
 				}
 			}
