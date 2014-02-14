@@ -48,9 +48,7 @@ overflow-x: hidden;
 	margin-bottom: 2px;
 	overflow: hidden;
 	cursor: pointer;
-	//-webkit-box-shadow: 0 0 50px rgba(0, 0, 0, 0.0);
-	//-webkit-transition: -webkit-box-shadow 0.5s;
-	-webkit-transition: background 0.2s;
+	-webkit-transition: background 0.2s, -webkit-transform 0.08s ease-out;
 }
 
 .entry.placeholder {
@@ -72,6 +70,7 @@ overflow-x: hidden;
 	position: absolute;
 	z-index: 1000;
 	-webkit-box-shadow: 0 0 25px black;
+	-webkit-transform: scale(1.05, 1.05);
 }
 .entry.color0 {	background-color: #d0d0d0; }
 .entry.color1 {	background-color: #404040; }
