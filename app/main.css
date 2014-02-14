@@ -91,7 +91,7 @@ overflow-x: hidden;
 	-webkit-transition: opacity 0.25s;
 	background-position: center center;
 	background-repeat: no-repeat;
-	background-size: 50% 50%;
+	background-size: 24px 24px;
 	background-color: rgba(255, 255, 255, 0.05);
 }
 
@@ -106,7 +106,7 @@ overflow-x: hidden;
 
 .col .entry .btn:HOVER,
 .col .panel .btn:HOVER {
-	background-color: white ;
+	background-color: white;
 }
 
 .col .entry.floating .btn {
@@ -127,6 +127,7 @@ overflow-x: hidden;
 .col .entry.separator .btn.delete {
 	right: 0;
 	width: 20%;
+	background-size: 12px 12px;
 }
 .col .entry.separator .btn.edit {
 	display: none !important;
