@@ -1,3 +1,9 @@
+/** === TODO ===
+- adapt drag changes in logic/db
+
+*/
+
+
 var simplescope = {};
 
 simplescope.dummydata = {
@@ -31,12 +37,15 @@ simplescope.db.LocalStorage = function LocalStorage(storageKey) {
 	storageKey = storageKey || 'simplescope.localstorage_default';
 
 	this.save = function(data) {
+
 		localStorage.setItem(storageKey, data);
 	}
 
 	this.load = function() {
 		var data = localStorage.getItem(storageKey);
-		return data ? data : null;
+		if(!data)	return null;
+
+		return JSON.parse(data);
 	}
 };
 
@@ -167,10 +176,11 @@ simplescope.ui.Root = function Root(cols) {
 
 				$dropPlaceholder = null;
 
-
 				for(var i=0; i<cols.length; i++) {
 					cols[i].updatePlaceholders();
 				}
+
+				cb.onChange();
 
 				// TODO handle
 				if(drag_el.position().left == dragstart_pos.x
@@ -182,7 +192,25 @@ simplescope.ui.Root = function Root(cols) {
 
 	}	// onWindowDragStop
 
-};
+
+	this.toJSONString = function() {
+
+		var result = [];
+
+		for(var i=0; i<cols.length; i++) {
+			var colDat = [], entries = cols[i].getEntries();
+			for(var j=0; j<entries.length; j++) {
+				colDat.push({
+					label: entries[j].getLabel(),
+					color: entries[j].getColor(),
+				});
+			}
+			result.push(colDat);
+		}
+
+		return JSON.stringify(result);
+	}	// toJSONString
+};	// simplescope.ui.Root
 
 
 
@@ -276,6 +304,10 @@ var blub = Math.random();
 		$placeholders = self.$el.children('.placeholder');
 	}
 
+	this.getEntries = function() {
+		return entries;
+	}
+
 
 	// initialize UI
 
@@ -314,9 +346,17 @@ simplescope.ui.Entry = function Entry(label, color, callback) {
 		// TODO apply
 	}
 
+	this.getLabel= function() {
+		return label;
+	}
+
 	this.setColor = function(color) {
 		this.color = color || 0;
 		// TODO apply
+	}
+
+	this.getColor = function() {
+		return color;
 	}
 
 	this.setCallback = function(callback) {
@@ -330,6 +370,7 @@ simplescope.ui.Entry = function Entry(label, color, callback) {
 	this.destroy = function() {
 		// TODO IMPL
 	}
+
 
 
 	// defaults
@@ -405,6 +446,8 @@ $(function() {
 	var storage = new simplescope.db.LocalStorage(),
 		data = storage.load();
 
+		console.log(data)
+
 	if(!data) {
 		data = simplescope.dummydata.introduction;
 	}
@@ -428,6 +471,8 @@ $(function() {
 	root.setCallback({onChange: onUiChange});
 
 	function onUiChange() {
-		alert('change!!!!!!!')
+		console.log('change!!!!!!!')
+
+		storage.save(root.toJSONString());
 	};
 });
