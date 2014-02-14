@@ -60,7 +60,8 @@ simplescope.ui.Root = function Root(cols) {
 	var dragstart_offset,	// mousedown offset (px) relative to Entry element
 		dragstart_pos,		// original Entry element position before mousedown
 		draggedEntry = null,	// currently dragged Entry
-		$dropPlaceholder = null;	// the placeholder currently closest to the dragged Entry element
+		$focusPlaceholder = null,	// the placeholder currently closest to the dragged Entry element
+		$focusCol = null;			// ... and its parent Column element
 
 
 	var cbCols = {			// callback for all Columns
@@ -89,7 +90,7 @@ simplescope.ui.Root = function Root(cols) {
 		},
 
 		onDropPositionChange: function(col, ph) {
-			$dropPlaceholder = ph;	// store curr placeholder ref
+			$focusPlaceholder = ph;	// store curr placeholder ref
 
 			// for all Columns but the active one: reset placeholders
 			for(var i=0; i<cols.length; i++) {
@@ -151,15 +152,15 @@ simplescope.ui.Root = function Root(cols) {
 			cols[i].$el.unbind('mouseleave', cols[i].$el.resetPlaceholders);
 		}
 
-		if(typeof $dropPlaceholder === 'undefined') {
+		if(typeof $focusPlaceholder === 'undefined') {
 			alert('TODO handle click without drag, aborting.');
 			return;
 		}
 
 		// element is not dragged anymore, animated it to its new position
 		$drag_el.stop().animate({
-			left: $dropPlaceholder.position().left,
-			top: $dropPlaceholder.position().top
+			left: $focusPlaceholder.position().left,
+			top: $focusPlaceholder.position().top
 		}, {
 			duration: 100,
 			complete: function() {
@@ -177,16 +178,14 @@ simplescope.ui.Root = function Root(cols) {
 				$drag_el.removeAttr('style');
 
 				// replace target placeholder
-				$drag_el.insertBefore($dropPlaceholder);
-				$dropPlaceholder.detach();
+				$drag_el.insertBefore($focusPlaceholder);
+				$focusPlaceholder.detach();
 
-				$dropPlaceholder = null;
+				$focusPlaceholder = null;
 
 				for(var i=0; i<cols.length; i++) {
-					cols[i].updatePlaceholders();
+					cols[i].update(true);
 				}
-
-
 
 				cb.onChange();
 
@@ -223,8 +222,6 @@ simplescope.ui.Root = function Root(cols) {
 
 
 simplescope.ui.Column = function Column(entries) {
-
-var blub = Math.random();
 
 	var self = this;
 
@@ -298,9 +295,36 @@ var blub = Math.random();
 		$placeholders.css('height', 0);
 	}
 
-	/** Removes all existing placeholders and creates new default 
-	placeholders for all Entries in this Column. */
-	this.updatePlaceholders = function() {
+	/** Updates/overwrites stored data with data from DOM, 
+	removes all existing placeholders and creates new default 
+	placeholders for all Entries in this Column. 
+	deep: re-read entry labels and colors from DOM
+	*/
+	this.update = function(deep) {
+
+		if(deep) {
+
+			$entries = this.$el.children('.entry').not($placeholders);
+
+			var entriesNew = [];
+			$entries.each(function() {
+
+				var color;
+				$(this).attr('class').split(' ').filter(function(val, ix, arr) {
+					return val.indexOf('color') == 0;
+				}).forEach(function(val) {
+					color = parseInt(val.replace('color', ''));
+				});
+
+				entriesNew.push(new simplescope.ui.Entry(
+					$(this).children('.label').text(),
+					color, cbEntries
+				));
+			});
+
+			entries = entriesNew;
+		}
+
 		if($placeholders)	$placeholders.detach();
 
 		self.$el.prepend($('<div class="entry placeholder"></div>'));	// TODO REDUNDANT
@@ -327,7 +351,7 @@ var blub = Math.random();
 		entries[i].setCallback(cbEntries);
 		this.$el.append(entries[i].$el);
 	}
-	this.updatePlaceholders();
+	this.update(false);	// ... to create placeholders
 
 	$placeholders = this.$el.children('.placeholder');	// TODO cool way to collect refs on creation?
 
@@ -336,7 +360,6 @@ var blub = Math.random();
 
 	// TODO
 };
-
 
 
 
@@ -375,10 +398,17 @@ simplescope.ui.Entry = function Entry(label, color, callback) {
 		};
 	}
 
+	/** Updates/overwrites internal model data with DOM data. 
+	TODO UNUSED
+	*/
+	this.update = function() {
+		label = $label.text();
+		// TODO color
+	}
+
 	this.destroy = function() {
 		// TODO IMPL
 	}
-
 
 
 	// defaults
@@ -453,8 +483,6 @@ $(function() {
 
 	var storage = new simplescope.db.LocalStorage(),
 		data = storage.load();
-
-		console.log(data)
 
 	if(!data) {
 		data = simplescope.dummydata.introduction;
