@@ -456,6 +456,7 @@ simplescope.ui.Entry = function Entry(label, color, callback) {
 			}else if(buffAction === 'delete') {
 				alert('TODO trigger delete action')
 			}
+			buffAction = null;
 		}
 	}
 
