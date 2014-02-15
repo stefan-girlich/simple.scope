@@ -91,6 +91,7 @@ simplescope.ui.Entry = function Entry(label, color, callback, $domEl) {
 		$btn_decl = $domEl.children('.btn.decline');
 
 		// throw away any previous listeners
+		this.$el.unbind();
 		$label.unbind();
 		$btn_edit.unbind();
 		$btn_del.unbind();
@@ -98,6 +99,8 @@ simplescope.ui.Entry = function Entry(label, color, callback, $domEl) {
 		$btn_decl.unbind();
 	}
 
+	this.$el.mousedown(onMouseDown);
+	this.$el.mouseup(onMouseUp);
 	$label.click('click', onLabelClick);
 	$label.blur(onLabelBlur);
 	$btn_edit.click(onButtonClick);
@@ -173,10 +176,6 @@ simplescope.ui.Entry = function Entry(label, color, callback, $domEl) {
 	function toggleTextInput(active) {
 		// TODO IMPL
 	}
-
-
-	this.$el.mousedown(onMouseDown);
-	this.$el.mouseup(onMouseUp);
 
 
 	var mouseDownPos = null;
