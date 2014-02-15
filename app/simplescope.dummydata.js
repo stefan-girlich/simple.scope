@@ -18,5 +18,23 @@ simplescope.dummydata = {
 			{label: '', color: 0},
 			{label: 'Everything is stored only in your current web browser.', color: 2}
 		]
+	],
+
+	'demo_screenshot':	[
+	
+		[
+			{"label":"fix ticket #312: <br>nasty flicker bug on soft keyboard appear","color":4},
+			{"label":"@vince discuss Calabash Android test cases<br>","color":3},
+			{"label":"buy Club-Mate<br>","color":2}
+		],
+
+		[
+			{"label":"[backend project]","color":5},
+			{"label":"evaluate node.js frameworks","color":1},
+			{"label":"@sarah SDK doc?","color":1},
+			{"label":null,"color":5},
+			{"label":"listen to: Gui Boratto","color":1},
+			{"label":"whiteboards?","color":0}
+		]
 	]
 };
