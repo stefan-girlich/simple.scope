@@ -7,6 +7,7 @@
 
 
 ###usability
+* delete separators right away, no safety
 * pimp add panel
 * put caret next to click for nicer editing
 * basic keyboard support: create entry by ENTER press

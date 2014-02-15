@@ -145,8 +145,39 @@ simplescope.ui.Column = function Column(entries) {
 
 	$placeholders = this.$el.children('.placeholder');	// TODO cool way to collect refs on creation?
 
-	var $add_panel = $('<div class="panel"><div class="btn add"></div><input type="text" class="tf" /></div>');
+	var $add_panel = $('<div class="panel"></div>');
+	var $btn_add = $('<div class="btn add"></div>');
+	var $text_input = $('<span contentEditable="true" class="tf"></span');
+
+	$add_panel.append($text_input, $btn_add);
 	this.$el.append($add_panel);
 
-	// TODO
+	$btn_add.click(onAddButtonClick);
+
+	function onAddButtonClick(evt) {
+
+		var color = 0;	// TODO dynamic
+
+		var newLabel = $text_input.html(),
+			newEntry = new simplescope.ui.Entry(newLabel, color, cbEntries),
+			$newEl = newEntry.$el,
+			$ph = $('<div class="entry placeholder created"></div>');
+
+		$newEl.wrap($ph);
+		$ph = $newEl.parent();	// retrieve lost ref
+		$add_panel.before($ph);
+
+		// TODO vendor prefix / cross browser
+		$ph.bind('webkitTransitionEnd', function(evt) {
+			$newEl.unwrap();
+			cb.onChange();
+		})
+
+		// trigger open animation
+		$ph.height($newEl.outerHeight(true));
+
+		// empty text input
+		$text_input.html('');
+
+	} // onAddButtonClick
 };

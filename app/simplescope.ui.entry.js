@@ -49,6 +49,7 @@ simplescope.ui.Entry = function Entry(label, color, callback, $domEl) {
 	*/
 	this.update = function() {
 		label = $label.html();
+		is_sep = !label || label.length <= 0;
 		// TODO color
 	}
 
@@ -73,6 +74,9 @@ simplescope.ui.Entry = function Entry(label, color, callback, $domEl) {
 	// defaults
 	this.setCallback(callback);
 
+	// TODO init label through setter in favor of checks?
+	var is_sep = !label || label.length <= 0;
+
 
 	// === initialize UI elements ===
 
@@ -82,8 +86,6 @@ simplescope.ui.Entry = function Entry(label, color, callback, $domEl) {
 	if(!$domEl) {
 		// no existing DOM element given, create new one
 
-		// TODO init label through setter in favor of checks?
-		var is_sep = !label || label.length <= 0;
 		this.$el = $('<div class="entry color' + color + (is_sep ? ' separator ' : '') +'"></div>');
 
 		// TODO spell check could be optional
@@ -133,6 +135,12 @@ simplescope.ui.Entry = function Entry(label, color, callback, $domEl) {
 		var t = evt.target;
 
 		if(t === $btn_del[0]) {
+
+			if(is_sep) {
+				self.delete();
+				return;
+			}
+
 			toggleSafetyCtrl(true);
 			self.$el.data('buffered_action', 'delete')
 
@@ -281,6 +289,12 @@ simplescope.ui.Entry = function Entry(label, color, callback, $domEl) {
 
 		self.setInputEnabled(false);
 		textInputMode = false;
+
+		if($label.html().length <= 0) {
+			self.$el.addClass('separator');
+		}else {
+			self.$el.removeClass('separator');
+		}
 
 		// handle unfocussing as "save changes" action
 		self.update();
