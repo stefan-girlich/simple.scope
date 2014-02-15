@@ -48,7 +48,7 @@ simplescope.ui.Entry = function Entry(label, color, callback, $domEl) {
 	TODO UNUSED
 	*/
 	this.update = function() {
-		label = $label.text();
+		label = $label.html();
 		// TODO color
 	}
 

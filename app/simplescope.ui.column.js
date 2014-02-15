@@ -106,7 +106,7 @@ simplescope.ui.Column = function Column(entries) {
 				});
 
 				entriesNew.push(new simplescope.ui.Entry(
-					$(this).children('.label').text(),
+					$(this).children('.label').html(),
 					color, cbEntries,
 					$(this)
 				));
