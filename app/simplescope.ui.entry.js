@@ -10,6 +10,8 @@ simplescope.ui.Entry = function Entry(label, color, callback, $domEl) {
 	var label = label || null, color = color || 0,
 		cb;
 
+	var textInputMode = false;
+
 	// === API ===
 
 	this.setLabel = function(label) {
@@ -102,6 +104,7 @@ simplescope.ui.Entry = function Entry(label, color, callback, $domEl) {
 	this.$el.mousedown(onMouseDown);
 	this.$el.mouseup(onMouseUp);
 	$label.click('click', onLabelClick);
+	$label.focus(onLabelFocus);
 	$label.blur(onLabelBlur);
 	$btn_edit.click(onButtonClick);
 	$btn_del.click(onButtonClick);
@@ -173,11 +176,6 @@ simplescope.ui.Entry = function Entry(label, color, callback, $domEl) {
 		}
 	}
 
-	function toggleTextInput(active) {
-		// TODO IMPL
-	}
-
-
 	var mouseDownPos = null;
 
 	function onMouseDown(evt) {
@@ -192,6 +190,11 @@ simplescope.ui.Entry = function Entry(label, color, callback, $domEl) {
 		// TODO bad practice: read from DOM
 		if($(evt.target).hasClass('btn')) {
 			// prevent dragging on buttons
+			return;
+		}
+
+		if(textInputMode) {
+			// allow, drag text selection, prevent drag-moving the entry
 			return;
 		}
 
@@ -254,8 +257,13 @@ simplescope.ui.Entry = function Entry(label, color, callback, $domEl) {
 
 	}
 
+	function onLabelFocus(evt) {
+		textInputMode = true;
+	}
+
 	function onLabelBlur(evt) {
 		self.setInputEnabled(false);
+		textInputMode = false;
 	}
 
 };
