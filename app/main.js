@@ -14,7 +14,7 @@ $(function() {
 	var storage = new simplescope.db.LocalStorage(),
 		data = storage.load();
 
-	if(!data) {
+	if(true||!data) {
 		data = simplescope.dummydata.introduction;
 	}
 

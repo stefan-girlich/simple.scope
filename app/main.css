@@ -1,15 +1,16 @@
 @CHARSET "ISO-8859-1";
 
-*:not(input) {
+* {
 	margin: 0;
 	padding: 0;
 	border: 0;
 }
-*:not(input) {
+
+*:not(.tf) {
 	  -moz-user-select: none;
-  -khtml-user-select: none;
-  -webkit-user-select: none;
-  user-select: none;
+	  -khtml-user-select: none;
+	  -webkit-user-select: none;
+	  user-select: none;
 }
 .mouseDisabled {
 	pointer-events: none;
@@ -72,6 +73,7 @@ overflow-x: hidden;
 	-webkit-box-shadow: 0 0 25px black;
 	-webkit-transform: scale(1.05, 1.05);
 }
+
 .entry.color0 {	background-color: #d0d0d0; }
 .entry.color1 {	background-color: #404040; }
 .entry.color2 {	background-color: #2c6ab4; }
@@ -137,15 +139,7 @@ overflow-x: hidden;
 	background-color: #505050;
 }
 
-.col .panel .btn.add {
-	right: 0;
-	width: 20%;
-	background-image: url('icon_plus.svg');
-}
-
-
-.col .entry input.tf,
-.col .panel input.tf {
+.col .panel .tf {
 	float: left;
 	position: relative;
 	height: 45px;
@@ -153,4 +147,15 @@ overflow-x: hidden;
 	font-size: 40px;
 	font-weight: bold;
 	border: 0;
+}
+
+
+.col .panel .btn.add {
+	right: 0;
+	width: 20%;
+	background-image: url('icon_plus.svg');
+}
+
+.tf {
+	outline: 0 solid transparent;
 }

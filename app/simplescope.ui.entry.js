@@ -57,9 +57,11 @@ simplescope.ui.Entry = function Entry(label, color, callback) {
 
 	// initialize UI elements
 	// TODO init through setter in favor of checks?
-	var is_sep = !label || label.length <= 0 ? ' separator ' : '';
-	this.$el = $('<div class="entry color' + color +is_sep+'"></div>');
-	var $label = $('<span class="label">'+(is_sep ? '' : label)+'</span>'),
+	var is_sep = !label || label.length <= 0;
+	this.$el = $('<div class="entry color' + color + (is_sep ? ' separator ' : '') +'"></div>');
+
+	// TODO spell check could be optional
+	var $label = $('<span contentEditable="true" spellcheck="false" class="label tf">'+(is_sep ? '' : label)+'</span>'),
 		$btn_edit = $('<div class="btn edit start_edit"></div>'),
 		$btn_del = $('<div class="btn delete start_delete"></div>'),
 		$btn_acc = $('<div class="btn accept"></div>'),
@@ -114,7 +116,10 @@ simplescope.ui.Entry = function Entry(label, color, callback) {
 			$btn_acc.hide();
 			$btn_decl.hide();
 		}
+	}
 
+	function toggleTextInput(active) {
+		// TODO IMPL
 	}
 
 
