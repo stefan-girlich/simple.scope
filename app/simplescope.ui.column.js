@@ -39,7 +39,13 @@ simplescope.ui.Column = function Column(entries) {
 		};
 	}
 
-// TODO DOC an entry is dragged over the col
+	this.setEntriesInputEnabled = function(enabled) {
+		entries.forEach(function(el) {
+			el.setInputEnabled(enabled);
+		});
+	}
+
+	// TODO DOC an entry is dragged over the col
 	this.onEntryDrag = function(dragEntry, evt) {
 
 		var trgt = self.$el;
@@ -101,7 +107,8 @@ simplescope.ui.Column = function Column(entries) {
 
 				entriesNew.push(new simplescope.ui.Entry(
 					$(this).children('.label').text(),
-					color, cbEntries
+					color, cbEntries,
+					$(this)
 				));
 			});
 

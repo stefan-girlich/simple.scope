@@ -35,7 +35,12 @@ simplescope.ui.Root = function Root(cols) {
 			$(window).mouseup(onWindowDragStop);
 
 			for(var i=0; i<cols.length; i++) {
+				// reset all placeholders whenever the dragged element leaves the column
 				cols[i].$el.mouseleave(cols[i].resetPlaceholders);
+
+				// disable text input for entries to prevent erronous selections while dragging
+				cols[i].setEntriesInputEnabled(false);
+
 			}
 		},
 
@@ -87,6 +92,7 @@ simplescope.ui.Root = function Root(cols) {
 			}
 		}
 
+		// TODO callback method called from above!
 		closestCol.onEntryDrag(draggedEntry, evt);
 	}	// onWindowMouseDrag
 
@@ -129,7 +135,11 @@ simplescope.ui.Root = function Root(cols) {
 				$focusPlaceholder = null;
 
 				for(var i=0; i<cols.length; i++) {
+					// adopt DOM changes into internal data structure
 					cols[i].update(true);
+
+					//
+					cols[i].setEntriesInputEnabled(true);
 				}
 
 				cb.onChange();

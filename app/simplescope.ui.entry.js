@@ -3,7 +3,7 @@ var simplescope = simplescope || {};
 simplescope.ui = simplescope.ui || {};
 
 
-simplescope.ui.Entry = function Entry(label, color, callback) {
+simplescope.ui.Entry = function Entry(label, color, callback, $domEl) {
 
 	var self = this;
 
@@ -38,6 +38,10 @@ simplescope.ui.Entry = function Entry(label, color, callback) {
 		};
 	}
 
+	this.setInputEnabled = function(enabled) {
+		$label.attr('contentEditable', enabled ? 'true' : 'false')
+	}
+
 	/** Updates/overwrites internal model data with DOM data. 
 	TODO UNUSED
 	*/
@@ -55,19 +59,44 @@ simplescope.ui.Entry = function Entry(label, color, callback) {
 	this.setCallback(callback);
 
 
-	// initialize UI elements
-	// TODO init through setter in favor of checks?
-	var is_sep = !label || label.length <= 0;
-	this.$el = $('<div class="entry color' + color + (is_sep ? ' separator ' : '') +'"></div>');
+	// === initialize UI elements ===
 
-	// TODO spell check could be optional
-	var $label = $('<span contentEditable="true" spellcheck="false" class="label tf">'+(is_sep ? '' : label)+'</span>'),
-		$btn_edit = $('<div class="btn edit start_edit"></div>'),
-		$btn_del = $('<div class="btn delete start_delete"></div>'),
-		$btn_acc = $('<div class="btn accept"></div>'),
+
+	var $label, $btn_edit, $btn_del, $btn_acc, $btn_decl;
+
+	if(!$domEl) {
+		// no existing DOM element given, create new one
+
+		// TODO init label through setter in favor of checks?
+		var is_sep = !label || label.length <= 0;
+		this.$el = $('<div class="entry color' + color + (is_sep ? ' separator ' : '') +'"></div>');
+
+		// TODO spell check could be optional
+		$label = $('<span contentEditable="true" spellcheck="false" class="label tf">'+(is_sep ? '' : label)+'</span>');
+		$btn_edit = $('<div class="btn edit start_edit"></div>');
+		$btn_del = $('<div class="btn delete start_delete"></div>');
+		$btn_acc = $('<div class="btn accept"></div>');
 		$btn_decl = $('<div class="btn decline"></div>');
 
-	this.$el.append($label, $btn_edit, $btn_del, $btn_acc, $btn_decl);
+		this.$el.append($label, $btn_edit, $btn_del, $btn_acc, $btn_decl);
+
+	}else {
+		// DOM element exists, collect references
+
+		this.$el = $domEl;
+		$label = $domEl.children('.label');
+		$btn_edit = $domEl.children('.btn.edit');
+		$btn_del = $domEl.children('.btn.delete');
+		$btn_acc = $domEl.children('.btn.accept');
+		$btn_decl = $domEl.children('.btn.decline');
+
+		// throw away any previous listeners
+		$label.unbind();
+		$btn_edit.unbind();
+		$btn_del.unbind();
+		$btn_acc.unbind();
+		$btn_decl.unbind();
+	}
 
 
 	$btn_edit.click(onButtonClick);
