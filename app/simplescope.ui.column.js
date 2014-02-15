@@ -152,6 +152,16 @@ simplescope.ui.Column = function Column(entries) {
 	$add_panel.append($text_input, $btn_add);
 	this.$el.append($add_panel);
 
+	// on text input focus: listen for key presses
+	$text_input.focus(function() {
+		$(window.document).keypress(onKeyPress);
+	});
+
+	// on text input blur: stop listening for key presses
+	$text_input.blur(function() {
+		$(window.document).unbind('keypress', onKeyPress);
+	});
+
 	$btn_add.click(onAddButtonClick);
 	$btn_add.mousewheel(onAddButtonMouseWheel);
 
@@ -159,6 +169,40 @@ simplescope.ui.Column = function Column(entries) {
 
 	function onAddButtonClick(evt) {
 
+		createEntry();
+
+	} // onAddButtonClick
+
+
+	function onAddButtonMouseWheel(evt, delta, deltaX, deltaY) {
+
+		color += deltaY > 0 ? 1 : -1;
+
+		if(color < 0) {
+			color = simplescope.ui.COLOR_CNT - 1; 
+		}else if(color > simplescope.ui.COLOR_CNT - 1) {
+			color = 0;
+		}
+
+		for(var i=0; i<simplescope.ui.COLOR_CNT; i++) {
+			$add_panel.removeClass('color' + i);
+		}
+
+		$add_panel.addClass('color' + color);
+
+	} // onAddButtonMouseWheel
+
+
+	function onKeyPress(evt) {
+		// 13: ENTER
+		// 10: Ctrl+ENTER in Chrome
+		if((evt.which === 13 || evt.which === 10) && (evt.ctrlKey || evt.metaKey)) {	// "Ctrl+ENTER" or "Cmd/Meta+ENTER"
+			createEntry();
+		}
+	} // onKeyPress
+
+	function createEntry() {
+		
 		var newLabel = $text_input.html(),
 			newEntry = new simplescope.ui.Entry(newLabel, color, cbEntries),
 			$newEl = newEntry.$el,
@@ -188,26 +232,5 @@ simplescope.ui.Column = function Column(entries) {
 		color = 1;
 
 		$add_panel.addClass('color' + color);
-
-	} // onAddButtonClick
-
-	function onAddButtonMouseWheel(evt, delta, deltaX, deltaY) {
-
-		color += deltaY > 0 ? 1 : -1;
-
-		console.log(simplescope.ui.COLOR_CNT)
-
-		if(color < 0) {
-			color = simplescope.ui.COLOR_CNT - 1; 
-		}else if(color > simplescope.ui.COLOR_CNT - 1) {
-			color = 0;
-		}
-
-		for(var i=0; i<simplescope.ui.COLOR_CNT; i++) {
-			$add_panel.removeClass('color' + i);
-		}
-
-		$add_panel.addClass('color' + color);
-
-	} // onAddButtonMouseWheel
+	}
 };
