@@ -125,7 +125,12 @@ simplescope.ui.Entry = function Entry(label, color, callback, $domEl) {
 	$btn_acc.click(onButtonClick);
 
 
-	var buffAction = null;
+	/* 
+	TODO instead of using $.data with separate keys,
+	everything should be stored in a single JS object that
+	gets stored in the DOM through $.data
+	major advantage: all transient data in one place
+	*/
 
 	function onButtonClick(evt) {
 
@@ -133,21 +138,21 @@ simplescope.ui.Entry = function Entry(label, color, callback, $domEl) {
 
 		if(t === $btn_edit[0]) {
 			toggleSafetyCtrl(true);
-			buffAction = 'edit';
+			self.$el.data('buffered_action', 'edit')
 		}else if(t === $btn_del[0]) {
 			toggleSafetyCtrl(true);
-			buffAction = 'delete';
+			self.$el.data('buffered_action', 'delete')
 		}else if(t === $btn_decl[0]) {
 			toggleSafetyCtrl(false);
 			buffAction = null;
 		}else if(t === $btn_acc[0]) {
 			toggleSafetyCtrl(false);
-			if(buffAction === 'edit') {
+			if(self.$el.data('buffered_action') === 'edit') {
 				alert('TODO trigger edit action')
-			}else if(buffAction === 'delete') {
+			}else if(self.$el.data('buffered_action') === 'delete') {
 				self.delete();
 			}
-			buffAction = null;
+			self.$el.data('buffered_action', null)
 		}
 	}
 

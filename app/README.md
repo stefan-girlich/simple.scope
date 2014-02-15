@@ -7,7 +7,6 @@
 
 
 ###usability
-* decrease icon size
 * pimp add panel
 * put caret next to click for nicer editing
 * basic keyboard support: create entry by ENTER press
