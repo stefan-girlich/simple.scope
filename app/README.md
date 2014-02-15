@@ -17,10 +17,7 @@
 
 
 ###basics
-* create entry
-* save entry label changes
 * switch entry colors
-* delete entries
 
 
 ###long term

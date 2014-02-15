@@ -5,6 +5,8 @@ simplescope.ui = simplescope.ui || {};
 
 simplescope.ui.Entry = function Entry(label, color, callback, $domEl) {
 
+	this.COLOR_CNT = 6;
+
 	var self = this;
 
 	var label = label || null, color = color || 0,
@@ -119,6 +121,7 @@ simplescope.ui.Entry = function Entry(label, color, callback, $domEl) {
 	$label.focus(onLabelFocus);
 	$label.blur(onLabelBlur);
 	$btn_del.click(onButtonClick);
+	$btn_del.mousewheel(onButtonMouseWheel);
 	$btn_decl.click(onButtonClick);
 	$btn_acc.click(onButtonClick);
 
@@ -303,4 +306,22 @@ simplescope.ui.Entry = function Entry(label, color, callback, $domEl) {
 		cb.onEdit();
 	}
 
+	function onButtonMouseWheel(evt, delta, deltaX, deltaY) {
+
+		color += deltaY > 0 ? 1 : -1;
+
+		if(color < 0) {
+			color = self.COLOR_CNT - 1; 
+		}else if(color > self.COLOR_CNT - 1) {
+			color = 0;
+		}
+
+		for(var i=0; i<self.COLOR_CNT; i++) {
+			self.$el.removeClass('color' + i);
+		}
+
+		self.$el.addClass('color' + color);
+
+		cb.onEdit();
+	}
 };
