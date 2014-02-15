@@ -117,15 +117,66 @@ simplescope.ui.Entry = function Entry(label, color, callback) {
 
 	}
 
-	// TODO refactor in named method
-	this.$el.mousedown(function(evt) {
 
-		var el = self.$el;
+	this.$el.mousedown(onMouseDown);
+	this.$el.mouseup(onMouseUp);
 
-		if(evt.target !== el[0]) {
+
+	var mouseDownPos = null;
+
+	function onMouseDown(evt) {
+
+		var $el = $(evt.currentTarget);
+
+		mouseDownPos = {
+			x: evt.pageX - $el.position().left,
+			y: evt.pageY - $el.position().top
+		};
+
+		if(evt.target !== $el[0]) {
 			// do nothing for starting drags on buttons etc.
 			return;
 		}
+
+		// listen for initial drag movement
+		$el.one('mousemove', onDragStart);
+
+		return;
+	}
+
+	function onMouseUp(evt) {
+
+		var $currTrgt = $(evt.currentTarget),
+			trgt = $(evt.target);
+
+		// when there has been no movement between onMouseDown and onMouseUp,
+		// onDragStart may be triggered, so unbind the listener
+		$currTrgt.unbind('mousemove', onDragStart);
+
+		var mouseUpPos = {
+			x: evt.pageX - $currTrgt.position().left,
+			y: evt.pageY - $currTrgt.position().top
+		};
+
+
+		if(mouseDownPos && mouseDownPos.x === mouseUpPos.x 
+			&& mouseDownPos.y === mouseUpPos.y) {
+			// it's a click!
+
+			if(trgt[0] === $label[0]) {
+				// label clicked
+
+				// TODO handle
+			}
+
+		}
+
+		mouseDownPos = null;
+	}
+
+	function onDragStart(evt) {
+
+		var el = self.$el;
 
 		// hack: apply placeholder height, bypassing CSS animation
 		el.next().addClass('no_anim');
@@ -141,7 +192,7 @@ simplescope.ui.Entry = function Entry(label, color, callback) {
 
 		// drag handling are handled by higher instances
 		cb.onEntryDragStart(self, evt);
-	});
 
-	
+	}
+
 };
