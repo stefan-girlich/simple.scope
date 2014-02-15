@@ -37,8 +37,6 @@ $(function() {
 	root.setCallback({onChange: onUiChange});
 
 	function onUiChange() {
-		console.log('change!!!!!!!')
-
 		storage.save(root.toJSONString());
 	};
 });

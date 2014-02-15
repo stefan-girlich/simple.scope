@@ -7,7 +7,7 @@ simplescope.dummydata = {
 		[	// column 1
 			{label: 'simple.scope', color: 1},
 			{label: 'is a lightweight tool for taking notes.', color: 0},
-			{label: 'Create new notes using the bottom text fields. You can use Ctrl (or Cmd on Mac) and ENTER on your keyboard.', color: 2}
+			{label: 'Create new notes using the bottom panels with the plus buttons. You can use Ctrl/Cmd&nbsp;+&nbsp;ENTER on your keyboard.', color: 2}
 		],
 
 		[	// column 2

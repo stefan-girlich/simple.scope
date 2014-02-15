@@ -147,7 +147,6 @@ overflow-x: hidden;
 	font-size: 28px;
 	font-weight: bold;
 	border: 0;
-	cursor: text;
 }
 
 
@@ -160,4 +159,12 @@ overflow-x: hidden;
 
 .tf {
 	outline: 0 solid transparent;
+}
+.tf[contentEditable=true] {
+	cursor: text;
+}
+
+/** TODO cross browser / vendor prefix */
+.tf::selection {
+	background: rgba(255, 255, 255, 0.2);
 }
