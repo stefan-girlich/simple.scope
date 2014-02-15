@@ -52,8 +52,21 @@ simplescope.ui.Entry = function Entry(label, color, callback, $domEl) {
 		// TODO color
 	}
 
-	this.destroy = function() {
-		// TODO IMPL
+	this.delete = function() {
+
+		var $delete_wrap = $('<div class="entry placeholder"></div>');
+		$delete_wrap.height(this.$el.outerHeight(true));
+		this.$el.wrap($delete_wrap);
+		$delete_wrap = this.$el.parent(); // retrieve lost reference
+
+		// TODO vendor prefix / cross browser
+		$delete_wrap.one('webkitTransitionEnd', function(evt) {
+			$delete_wrap.detach();
+			cb.onDelete();
+		});
+
+		// trigger closing animation
+		$delete_wrap.height(0);
 	}
 
 
@@ -132,7 +145,7 @@ simplescope.ui.Entry = function Entry(label, color, callback, $domEl) {
 			if(buffAction === 'edit') {
 				alert('TODO trigger edit action')
 			}else if(buffAction === 'delete') {
-				alert('TODO trigger delete action')
+				self.delete();
 			}
 			buffAction = null;
 		}

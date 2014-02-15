@@ -16,6 +16,12 @@ simplescope.ui.Root = function Root(cols) {
 
 	var cbCols = {			// callback for all Columns
 		onChange: function() {
+
+			// store changes from DOM
+			cols.forEach(function(col) {
+				col.update(true);
+			})
+
 			cb.onChange();
 		},
 		onEntryDragStart: function(dragEntry, evt) {
