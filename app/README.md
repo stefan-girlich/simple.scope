@@ -2,6 +2,11 @@
 
 ##TODO
 
+
+###bugs
+* enter entry edit mode, try to drag-select text -> entry is drag-moved
+* enter entry edit mode, drag entry, click label to enter edit mode again -> 3 clicks required, seems like invalid state
+
 ###usability
 * decrease font size and margins
 * decrease icon size
@@ -10,6 +15,7 @@
 * basic keyboard support: create entry by ENTER press
 * fix weird Apple Magic Mouse behaviour (disable or workaround easing)
 * simple.scope logo in the bottom
+* performance check
 
 
 ###basics
