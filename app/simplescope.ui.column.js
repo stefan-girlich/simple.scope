@@ -9,7 +9,7 @@ simplescope.ui.Column = function Column(entries) {
 
 	var entries = entries,
 		cbEntries = {	// callback for entries
-			onEdit: function(newLabel) {
+			onEdit: function() {
 				cb.onChange();
 			},
 			onDelete: function() {

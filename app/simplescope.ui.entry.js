@@ -34,7 +34,7 @@ simplescope.ui.Entry = function Entry(label, color, callback, $domEl) {
 
 	this.setCallback = function(callback) {
 		cb = callback || {
-			onEdit: function(newLabel) {},
+			onEdit: function() {},
 			onDelete: function() {},
 			onDragStart: function(el) {}
 		};
@@ -139,34 +139,41 @@ simplescope.ui.Entry = function Entry(label, color, callback, $domEl) {
 		if(t === $btn_edit[0]) {
 			toggleSafetyCtrl(true);
 			self.$el.data('buffered_action', 'edit')
+			enterTextInputMode();
 		}else if(t === $btn_del[0]) {
 			toggleSafetyCtrl(true);
 			self.$el.data('buffered_action', 'delete')
+
 		}else if(t === $btn_decl[0]) {
+
 			toggleSafetyCtrl(false);
 			buffAction = null;
+
 		}else if(t === $btn_acc[0]) {
+
 			toggleSafetyCtrl(false);
-			if(self.$el.data('buffered_action') === 'edit') {
-				alert('TODO trigger edit action')
-			}else if(self.$el.data('buffered_action') === 'delete') {
-				self.delete();
-			}
+
+			self.delete();
 			self.$el.data('buffered_action', null)
 		}
 	}
 
 	function onLabelClick(evt) {
+		toggleSafetyCtrl(true);
+		enterTextInputMode();
+	}
 
-		// already in text input mode, nothing TODO
+
+	function enterTextInputMode() {
+		// already in text input mode, nothing to do
 		// TODO reading from DOM is bad practice
-		if($label.attr('contentEditable') === 'true') {
+		if(textInputMode) {
 			return;
 		}
 
 		self.setInputEnabled(true);
 		
-		var el = $(this)[0];
+		var el = $label[0];
 
 		// set caret to end of label text, default would be index 0 position
     	var range = document.createRange();
@@ -280,8 +287,17 @@ simplescope.ui.Entry = function Entry(label, color, callback, $domEl) {
 	}
 
 	function onLabelBlur(evt) {
+
+		/* NOTE: will also be triggered when blurring through click on button */
+
 		self.setInputEnabled(false);
 		textInputMode = false;
+
+		// handle unfocussing as "save changes" action
+		self.update();
+		toggleSafetyCtrl(false);
+		self.$el.data('buffered_action', null);
+		cb.onEdit();
 	}
 
 };
