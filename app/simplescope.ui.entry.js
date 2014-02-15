@@ -77,7 +77,7 @@ simplescope.ui.Entry = function Entry(label, color, callback, $domEl) {
 	// === initialize UI elements ===
 
 
-	var $label, $btn_edit, $btn_del, $btn_acc, $btn_decl;
+	var $label, $btn_del, $btn_acc, $btn_decl;
 
 	if(!$domEl) {
 		// no existing DOM element given, create new one
@@ -88,19 +88,17 @@ simplescope.ui.Entry = function Entry(label, color, callback, $domEl) {
 
 		// TODO spell check could be optional
 		$label = $('<span contentEditable="false" spellcheck="false" class="label tf">'+(is_sep ? '' : label)+'</span>');
-		$btn_edit = $('<div class="btn edit start_edit"></div>');
 		$btn_del = $('<div class="btn delete start_delete"></div>');
 		$btn_acc = $('<div class="btn accept"></div>');
 		$btn_decl = $('<div class="btn decline"></div>');
 
-		this.$el.append($label, $btn_edit, $btn_del, $btn_acc, $btn_decl);
+		this.$el.append($label, $btn_del, $btn_acc, $btn_decl);
 
 	}else {
 		// DOM element exists, collect references
 
 		this.$el = $domEl;
 		$label = $domEl.children('.label');
-		$btn_edit = $domEl.children('.btn.edit');
 		$btn_del = $domEl.children('.btn.delete');
 		$btn_acc = $domEl.children('.btn.accept');
 		$btn_decl = $domEl.children('.btn.decline');
@@ -108,7 +106,6 @@ simplescope.ui.Entry = function Entry(label, color, callback, $domEl) {
 		// throw away any previous listeners
 		this.$el.unbind();
 		$label.unbind();
-		$btn_edit.unbind();
 		$btn_del.unbind();
 		$btn_acc.unbind();
 		$btn_decl.unbind();
@@ -119,7 +116,6 @@ simplescope.ui.Entry = function Entry(label, color, callback, $domEl) {
 	$label.click('click', onLabelClick);
 	$label.focus(onLabelFocus);
 	$label.blur(onLabelBlur);
-	$btn_edit.click(onButtonClick);
 	$btn_del.click(onButtonClick);
 	$btn_decl.click(onButtonClick);
 	$btn_acc.click(onButtonClick);
@@ -136,11 +132,7 @@ simplescope.ui.Entry = function Entry(label, color, callback, $domEl) {
 
 		var t = evt.target;
 
-		if(t === $btn_edit[0]) {
-			toggleSafetyCtrl(true);
-			self.$el.data('buffered_action', 'edit')
-			enterTextInputMode();
-		}else if(t === $btn_del[0]) {
+		if(t === $btn_del[0]) {
 			toggleSafetyCtrl(true);
 			self.$el.data('buffered_action', 'delete')
 
@@ -159,7 +151,6 @@ simplescope.ui.Entry = function Entry(label, color, callback, $domEl) {
 	}
 
 	function onLabelClick(evt) {
-		toggleSafetyCtrl(true);
 		enterTextInputMode();
 	}
 
@@ -189,12 +180,10 @@ simplescope.ui.Entry = function Entry(label, color, callback, $domEl) {
 	function toggleSafetyCtrl(active) {
 		// TODO cooler way? refs to .hide and .show?
 		if(active) {
-			$btn_edit.hide();
 			$btn_del.hide();
 			$btn_acc.show();
 			$btn_decl.show();
 		}else {
-			$btn_edit.show();
 			$btn_del.show();
 			$btn_acc.hide();
 			$btn_decl.hide();
