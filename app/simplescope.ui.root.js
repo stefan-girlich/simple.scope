@@ -137,18 +137,9 @@ simplescope.ui.Root = function Root(cols) {
 				for(var i=0; i<cols.length; i++) {
 					// adopt DOM changes into internal data structure
 					cols[i].update(true);
-
-					//
-					cols[i].setEntriesInputEnabled(true);
 				}
 
 				cb.onChange();
-
-				// TODO handle
-				if($drag_el.position().left == dragstart_pos.x
-						&& $drag_el.position().top == dragstart_pos.y) {
-					console.log('ENTRY CLICKED OBSOLETE (?)')
-				}
 			}
 		});
 

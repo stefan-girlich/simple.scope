@@ -190,8 +190,9 @@ simplescope.ui.Entry = function Entry(label, color, callback, $domEl) {
 			y: evt.pageY - $el.position().top
 		};
 
-		if(evt.target !== $el[0]) {
-			// do nothing for starting drags on buttons etc.
+		// TODO bad practice: read from DOM
+		if($(evt.target).hasClass('btn')) {
+			// prevent dragging on buttons
 			return;
 		}
 
@@ -246,6 +247,8 @@ simplescope.ui.Entry = function Entry(label, color, callback, $domEl) {
 		el.css('padding', el.css('padding'));
 		el.addClass('floating');
 		el.addClass('mouseDisabled')
+
+		self.setInputEnabled(false);
 
 		// drag handling are handled by higher instances
 		cb.onEntryDragStart(self, evt);
