@@ -145,7 +145,7 @@ simplescope.ui.Column = function Column(entries) {
 
 	$placeholders = this.$el.children('.placeholder');	// TODO cool way to collect refs on creation?
 
-	var $add_panel = $('<div class="panel"></div>');
+	var $add_panel = $('<div class="panel color1"></div>');
 	var $btn_add = $('<div class="btn add"></div>');
 	var $text_input = $('<span contentEditable="true" class="tf"></span');
 
@@ -153,10 +153,11 @@ simplescope.ui.Column = function Column(entries) {
 	this.$el.append($add_panel);
 
 	$btn_add.click(onAddButtonClick);
+	$btn_add.mousewheel(onAddButtonMouseWheel);
+
+	var color = 1;
 
 	function onAddButtonClick(evt) {
-
-		var color = 0;	// TODO dynamic
 
 		var newLabel = $text_input.html(),
 			newEntry = new simplescope.ui.Entry(newLabel, color, cbEntries),
@@ -179,5 +180,34 @@ simplescope.ui.Column = function Column(entries) {
 		// empty text input
 		$text_input.html('');
 
+		// reset color to default
+		for(var i=0; i<simplescope.ui.COLOR_CNT; i++) {
+			$add_panel.removeClass('color' + i);
+		}
+
+		color = 1;
+
+		$add_panel.addClass('color' + color);
+
 	} // onAddButtonClick
+
+	function onAddButtonMouseWheel(evt, delta, deltaX, deltaY) {
+
+		color += deltaY > 0 ? 1 : -1;
+
+		console.log(simplescope.ui.COLOR_CNT)
+
+		if(color < 0) {
+			color = simplescope.ui.COLOR_CNT - 1; 
+		}else if(color > simplescope.ui.COLOR_CNT - 1) {
+			color = 0;
+		}
+
+		for(var i=0; i<simplescope.ui.COLOR_CNT; i++) {
+			$add_panel.removeClass('color' + i);
+		}
+
+		$add_panel.addClass('color' + color);
+
+	} // onAddButtonMouseWheel
 };

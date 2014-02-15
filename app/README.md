@@ -2,22 +2,12 @@
 
 ##TODO
 
-
-###bugs
-
-
 ###usability
-* delete separators right away, no safety
-* pimp add panel
 * put caret next to click for nicer editing
-* basic keyboard support: create entry by ENTER press
+* basic keyboard support: create entry by ctrl+ENTER press
 * fix weird Apple Magic Mouse behaviour (disable or workaround easing)
 * simple.scope logo in the bottom
 * performance check
-
-
-###basics
-* switch entry colors
 
 
 ###long term

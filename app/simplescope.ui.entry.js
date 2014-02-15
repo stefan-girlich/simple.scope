@@ -3,9 +3,10 @@ var simplescope = simplescope || {};
 simplescope.ui = simplescope.ui || {};
 
 
+simplescope.ui.COLOR_CNT = 6;
+
 simplescope.ui.Entry = function Entry(label, color, callback, $domEl) {
 
-	this.COLOR_CNT = 6;
 
 	var self = this;
 
@@ -311,12 +312,12 @@ simplescope.ui.Entry = function Entry(label, color, callback, $domEl) {
 		color += deltaY > 0 ? 1 : -1;
 
 		if(color < 0) {
-			color = self.COLOR_CNT - 1; 
-		}else if(color > self.COLOR_CNT - 1) {
+			color = simplescope.ui.COLOR_CNT - 1; 
+		}else if(color > simplescope.ui.COLOR_CNT - 1) {
 			color = 0;
 		}
 
-		for(var i=0; i<self.COLOR_CNT; i++) {
+		for(var i=0; i<simplescope.ui.COLOR_CNT; i++) {
 			self.$el.removeClass('color' + i);
 		}
 
