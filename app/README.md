@@ -5,7 +5,6 @@
 ###usability
 * put caret next to click for nicer editing
 * fix weird Apple Magic Mouse behaviour (disable or workaround easing)
-* simple.scope logo in the bottom
 * performance check
 
 
