@@ -7,7 +7,6 @@
 
 
 ###usability
-* decrease font size and margins
 * decrease icon size
 * pimp add panel
 * put caret next to click for nicer editing
