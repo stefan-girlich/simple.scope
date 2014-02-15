@@ -62,7 +62,7 @@ body {
 .col {
 	width: 50%;
 	float: left;
-	font-size: 28px;
+	font-size: 20px;
 	color: white;
 	font-family: sans-serif;
 	font-weight: bold;
@@ -72,8 +72,8 @@ body {
 	position: relative;
 	float: left;
 	background: inherit;
-	width: 75%;
-	padding: 10px 20% 10px 3%;
+	width: 76%;
+	padding: 8px 20% 8px 2%;
 	margin-right: 2%;
 	margin-bottom: 2px;
 	overflow: hidden;
@@ -121,7 +121,7 @@ body {
 	-webkit-transition: opacity 0.25s;
 	background-position: center center;
 	background-repeat: no-repeat;
-	background-size: 20px 20px;
+	background-size: 16px 16px;
 	background-color: rgba(255, 255, 255, 0.05);
 }
 
@@ -157,23 +157,23 @@ body {
 .col .entry.separator .btn.delete {
 	right: 0;
 	width: 10%;
-	background-size: 12px 12px;
+	background-size: 8px 8px;
 }
 .col .entry.separator .btn.edit {
 	display: none !important;
 }
 
 .col .panel {
-	margin-top: 15px;
+	margin-top: 10px;
 	cursor: default;
 }
 
 .col .panel .tf {
 	float: left;
 	position: relative;
-	min-height: 31px;
+	min-height: 23px;
 	width: 95%;
-	font-size: 28px;
+	font-size: 20px;
 	font-weight: bold;
 	border: 0;
 }
