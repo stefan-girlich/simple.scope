@@ -97,11 +97,11 @@ overflow-x: hidden;
 }
 
 .col .entry .btn.edit {
-	right: 0;
+	right: 10%;
 	background-image: url('icon_edit.svg');
 }
 .col .entry .btn.delete {
-	right: 10%;
+	right: 0;
 	background-image: url('icon_delete.svg');
 }
 
