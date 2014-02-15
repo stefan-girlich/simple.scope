@@ -152,11 +152,6 @@ simplescope.ui.Root = function Root(cols) {
 			cols[i].$el.unbind('mouseleave', cols[i].$el.resetPlaceholders);
 		}
 
-		if(typeof $focusPlaceholder === 'undefined') {
-			alert('TODO handle click without drag, aborting.');
-			return;
-		}
-
 		// element is not dragged anymore, animated it to its new position
 		$drag_el.stop().animate({
 			left: $focusPlaceholder.position().left,
@@ -237,7 +232,8 @@ simplescope.ui.Column = function Column(entries) {
 				//self.onEntryDrag(dragEntry, evt);	// TESTEEEEINGNGSDNG
 				// $phActive = dragEntry.$el;
 
-				//$dropPlaceholder = dragEntry.$el.next('.placeholder');
+				// TODO obtaining the placeholder reference like this seems a bit nasty
+				cb.onDropPositionChange(self, dragEntry.$el.next('.placeholder'));
 				cb.onEntryDragStart(dragEntry, evt);
 			}
 		},
