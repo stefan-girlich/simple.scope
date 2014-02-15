@@ -72,7 +72,7 @@ simplescope.ui.Entry = function Entry(label, color, callback, $domEl) {
 		this.$el = $('<div class="entry color' + color + (is_sep ? ' separator ' : '') +'"></div>');
 
 		// TODO spell check could be optional
-		$label = $('<span contentEditable="true" spellcheck="false" class="label tf">'+(is_sep ? '' : label)+'</span>');
+		$label = $('<span contentEditable="false" spellcheck="false" class="label tf">'+(is_sep ? '' : label)+'</span>');
 		$btn_edit = $('<div class="btn edit start_edit"></div>');
 		$btn_del = $('<div class="btn delete start_delete"></div>');
 		$btn_acc = $('<div class="btn accept"></div>');
@@ -98,7 +98,8 @@ simplescope.ui.Entry = function Entry(label, color, callback, $domEl) {
 		$btn_decl.unbind();
 	}
 
-
+	$label.click('click', onLabelClick);
+	$label.blur(onLabelBlur);
 	$btn_edit.click(onButtonClick);
 	$btn_del.click(onButtonClick);
 	$btn_decl.click(onButtonClick);
@@ -129,6 +130,28 @@ simplescope.ui.Entry = function Entry(label, color, callback, $domEl) {
 			}
 			buffAction = null;
 		}
+	}
+
+	function onLabelClick(evt) {
+
+		// already in text input mode, nothing TODO
+		// TODO reading from DOM is bad practice
+		if($label.attr('contentEditable') === 'true') {
+			return;
+		}
+
+		self.setInputEnabled(true);
+		
+		var el = $(this)[0];
+
+		// set caret to end of label text, default would be index 0 position
+    	var range = document.createRange();
+    	var sel = window.getSelection();
+    	range.setStart(el.childNodes[0], el.childNodes[0].length);
+    	range.collapse(true);
+    	sel.removeAllRanges();
+    	sel.addRange(range);
+    	el.focus();
 	}
 
 
@@ -227,6 +250,10 @@ simplescope.ui.Entry = function Entry(label, color, callback, $domEl) {
 		// drag handling are handled by higher instances
 		cb.onEntryDragStart(self, evt);
 
+	}
+
+	function onLabelBlur(evt) {
+		self.setInputEnabled(false);
 	}
 
 };
