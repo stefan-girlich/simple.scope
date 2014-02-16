@@ -35,6 +35,11 @@ $(function() {
 	setTimeout(function() {
 		$('#header h2').removeClass('hidden');
 	}, 10);
+
+	// expand/close full screenshot image on click
+	$('.img_wrap').click(function(evt) {
+		$(this).toggleClass('open');
+	});
 	
 });
 
