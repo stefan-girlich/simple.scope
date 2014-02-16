@@ -10,7 +10,7 @@ simplescope.db.LocalStorage = function LocalStorage(storageKey) {
 
 	this.save = function(data) {
 
-		localStorage.setItem(storageKey, data);
+		localStorage.setItem(storageKey, data); // #build:demo:DROP
 	}
 
 	this.load = function() {
