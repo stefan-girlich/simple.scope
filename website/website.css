@@ -181,6 +181,7 @@ ul li {
 }
 
 .downloads a {
+	position: relative;
 	float: left;
 	display: block;
 	width: 264px;
@@ -208,6 +209,15 @@ ul li {
 	font-size: 15px;
 	font-weight: bold;
 	margin: 7px 0 6px 13px;
+}
+
+.downloads a span.min {
+	position: absolute;
+	right: 5px;
+	top: 3px;
+	font-size: 12px;
+	font-weight: normal;
+
 }
 
 
