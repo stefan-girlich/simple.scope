@@ -9,12 +9,15 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="320"
-   height="320"
+   width="12"
+   height="12"
    id="svg2"
    version="1.1"
-   inkscape:version="0.48.3.1 r9886"
-   sodipodi:docname="icon_delete.svg">
+   inkscape:version="0.48.4 r9939"
+   sodipodi:docname="icon_delete.svg"
+   inkscape:export-filename="/home/steve/projects_workspace/SimpleScope/app/icon_delete.png"
+   inkscape:export-xdpi="90"
+   inkscape:export-ydpi="90">
   <defs
      id="defs4" />
   <sodipodi:namedview
@@ -24,16 +27,16 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.35355339"
-     inkscape:cx="-832.23623"
-     inkscape:cy="38.857417"
+     inkscape:zoom="45.254834"
+     inkscape:cx="1.4580909"
+     inkscape:cy="6.1988658"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
      inkscape:window-width="1680"
-     inkscape:window-height="988"
-     inkscape:window-x="-8"
-     inkscape:window-y="-8"
+     inkscape:window-height="919"
+     inkscape:window-x="0"
+     inkscape:window-y="27"
      inkscape:window-maximized="1" />
   <metadata
      id="metadata7">
@@ -43,7 +46,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -51,14 +54,14 @@
      inkscape:label="Ebene 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(0,-732.3622)">
+     transform="translate(0,-1040.3622)">
     <rect
-       y="-320"
-       x="842.36218"
-       height="320"
-       width="100"
+       y="-12"
+       x="1045.3622"
+       height="12"
+       width="2"
        id="rect2991"
-       style="fill:#808080;fill-opacity:1;stroke:none"
+       style="fill:#252525;fill-opacity:1;stroke:none"
        transform="matrix(0,1,-1,0,0,0)" />
   </g>
 </svg>

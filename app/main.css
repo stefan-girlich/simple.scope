@@ -93,17 +93,17 @@ body {
 	-webkit-transition: opacity 0.25s;
 	background-position: center center;
 	background-repeat: no-repeat;
-	background-size: 16px 16px;
+	background-size: 12px 12px;
 	background-color: rgba(255, 255, 255, 0.05);
 }
 
 .col .entry .btn.edit {
 	right: 10%;
-	background-image: url('icon_edit.svg');
+	background-image: url('icon_edit.png');
 }
 .col .entry .btn.delete {
 	right: 0;
-	background-image: url('icon_delete.svg');
+	background-image: url('icon_delete.png');
 }
 
 .col .entry .btn:HOVER,
@@ -126,11 +126,6 @@ body {
 	background-image: url('icon_decline.svg');
 }
 
-.col .entry.separator .btn.delete {
-	right: 0;
-	width: 10%;
-	background-size: 8px 8px;
-}
 .col .entry.separator .btn.edit {
 	display: none !important;
 }
@@ -154,7 +149,7 @@ body {
 .col .panel .btn.add {
 	right: 0;
 	width: 10%;
-	background-image: url('icon_plus.svg');
+	background-image: url('icon_plus.png');
 	cursor: pointer;
 }
 

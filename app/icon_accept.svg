@@ -9,12 +9,15 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="320"
-   height="320"
+   width="12"
+   height="12"
    id="svg2"
    version="1.1"
-   inkscape:version="0.48.3.1 r9886"
-   sodipodi:docname="icon_edit.svg">
+   inkscape:version="0.48.4 r9939"
+   sodipodi:docname="icon_accept.svg"
+   inkscape:export-filename="/home/steve/projects_workspace/SimpleScope/app/icon_accept.png"
+   inkscape:export-xdpi="90"
+   inkscape:export-ydpi="90">
   <defs
      id="defs4" />
   <sodipodi:namedview
@@ -24,16 +27,16 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="1"
-     inkscape:cx="-230.55671"
-     inkscape:cy="32.279728"
+     inkscape:zoom="32"
+     inkscape:cx="-1.2906073"
+     inkscape:cy="6.73475"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
      inkscape:window-width="1680"
-     inkscape:window-height="988"
-     inkscape:window-x="-8"
-     inkscape:window-y="-8"
+     inkscape:window-height="919"
+     inkscape:window-x="0"
+     inkscape:window-y="27"
      inkscape:window-maximized="1" />
   <metadata
      id="metadata7">
@@ -43,7 +46,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -51,11 +54,22 @@
      inkscape:label="Ebene 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(0,-732.3622)">
-    <path
-       style="fill:#808080;fill-opacity:1;stroke:none"
-       d="M 257.42763,762.8698 121.7689,898.52853 62.572369,839.33199 0.90931098,900.99505 60.105846,960.19161 121.7689,1021.8546 183.43196,960.19161 319.09069,824.53286 257.42763,762.8698 z"
-       id="rect2985"
-       inkscape:connector-curvature="0" />
+     transform="translate(0,-1040.3622)">
+    <rect
+       y="-746.25745"
+       x="729.27216"
+       height="2"
+       width="10.5"
+       id="rect3129"
+       style="fill:#252525;fill-opacity:1"
+       transform="matrix(-0.70710678,0.70710678,-0.70710678,-0.70710678,0,0)" />
+    <rect
+       transform="matrix(-0.70710678,-0.70710678,0.70710678,-0.70710678,0,0)"
+       style="fill:#252525;fill-opacity:1"
+       id="rect3257"
+       width="6.5"
+       height="2"
+       x="-746.25745"
+       y="-739.77216" />
   </g>
 </svg>
