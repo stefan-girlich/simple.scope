@@ -6,16 +6,21 @@ from slimit import minify
 from csscompressor import compress
 import re
 import urllib
+import os
+import zipfile
+
+# TODO DYN
+VERSION="1.0"
 
 # base path where app resources are stored
 APP_BASEPATH = '../app/'
 
 # output directory
-OUT_BASEPATH = '../app/'
+OUT_BASEPATH = '../website/build/'
 
 # output file name
-OUT_FILENAME_MIN = 'simplescope.bundle.min.htm'
-OUT_FILENAME_MIN_DEMO = 'simplescope.demo.bundle.min.htm'
+OUT_FILENAME_MIN = 'simplescope.'+VERSION+'.bundle.min.htm'
+OUT_FILENAME_MIN_DEMO = 'simplescope.'+VERSION+'.demo.bundle.min.htm'
 
 
 # returns a (text) file's contents
@@ -121,10 +126,18 @@ def buildReleaseBundle(out_filename, releaseMode=None):
 with open(APP_BASEPATH + 'index.htm', 'r') as srcFile:
 	app_html_data = srcFile.read()
 
-#buildReleaseBundle(OUT_FILENAME_MIN)
+# build default and live demo versions
+buildReleaseBundle(OUT_FILENAME_MIN)
 buildReleaseBundle(OUT_FILENAME_MIN_DEMO, 'demo')
 
-
+# store default build bundle in ZIP archive
+zip_filename = OUT_FILENAME_MIN.split('.')
+zip_filename.pop()
+zip_filename = '.'.join(zip_filename) + '.zip'
+zf = zipfile.ZipFile(OUT_BASEPATH + zip_filename, 'w')
+zf.write(OUT_BASEPATH + OUT_FILENAME_MIN, OUT_FILENAME_MIN)
+zf.close()
+os.remove(OUT_BASEPATH + OUT_FILENAME_MIN)
 
 
 
