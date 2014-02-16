@@ -25,7 +25,7 @@ simplescope.dummydata = {
 		[
 			{"label":"fix ticket #312: <br>nasty flicker bug on soft keyboard appear","color":4},
 			{"label":"@vince discuss Calabash Android test cases<br>","color":3},
-			{"label":"buy Club-Mate<br>","color":2}
+			{"label":"club-mate<br>","color":2}
 		],
 
 		[
@@ -33,7 +33,7 @@ simplescope.dummydata = {
 			{"label":"evaluate node.js frameworks","color":1},
 			{"label":"@sarah SDK doc?","color":1},
 			{"label":null,"color":5},
-			{"label":"listen to: Gui Boratto","color":1},
+			{"label":"http://www.youtube.com/watch?v=i5GhFL0OWq8","color":1},
 			{"label":"whiteboards?","color":0}
 		]
 	]
