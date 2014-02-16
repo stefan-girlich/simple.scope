@@ -15,7 +15,7 @@ $(function() {
 		data = storage.load();
 
 	if(!data) {
-		data = simplescope.dummydata.introduction;
+		data = simplescope.dummydata.demo_screenshot;
 	}
 
 	var columns = [];

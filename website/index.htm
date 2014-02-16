@@ -4,16 +4,23 @@
 <meta charset="ISO-8859-1">
 
 <link href="website.css" rel="stylesheet" type="text/css" media="screen">
+<link href="logo.css" rel="stylesheet" type="text/css" media="screen">
 
 <script src="jquery-1.8.2.min.js"></script>
 <script>
 $(function() {
+
+	// create interactive colored boxes
 	var num_boxes = 6;
 	$('#header').append($('<div class="colorboxes" />'));
 	for(var i=0; i<num_boxes; i++) {
 		$('.colorboxes').append($('<div class="hidden color'+i+'" />').css('left', i * 50));
 	}
-	$('#header').append($('<h1 class="hidden">simplescope</h1><h2 class="hidden">a minimalist task organizer.</h2>'));
+
+	// add initially hidden header
+	$('#header').append($('<h1>simple.scope</h1><h2 class="hidden">a minimalist organization tool.</h2>'));
+
+	// trigger initial animation for boxes
 	var colored_boxes = $('#header .colorboxes div'),
 		curr_box_ix = 0;
 	var timer = setInterval(function() {
@@ -24,75 +31,205 @@ $(function() {
 		curr_box_ix++;
 	}, 77);
 	
+	// trigger initial animation for header
 	setTimeout(function() {
-		$('#header h1, #header h2').removeClass('hidden');
+		$('#header h2').removeClass('hidden');
 	}, 10);
 	
-	$('.usecase img').each(function() {
-		$(this).replaceWith($('<div class="icon '+$(this).attr('class')+'" />'));
-	});
 });
 
 </script>
 
 
 
-<title>simplescope. &ndash; a minimalist task organizer</title>
+<title>simple.scope &ndash; a minimalist task organizer</title>
 </head>
 <body>
 
 <div id="wrap">
 	<div id="header">
-	<noscript>
-		<h1>simplescope</h1>
-		<h2>a minimalist task organizer.</h2>
-		<!--  TODO add noscript graphics -->
-		
-	</noscript>
-	</div>
-	<div id="content">
-		<p class="lang_de">Als Softwareentwickler verbringe ich viel Zeit mit dem Zerlegen von Problemen in Teilaufgaben, dem Abhaken von To-Do-Listen und allgemein der Organisation meines eigenen Workflows. <strong>simplescope.</strong> ist ein simples Offline-Tool zum Notieren, Priorisieren und Organisieren kleiner Aufgaben, derzeit lauff&auml;hig in den Desktop-Browsern <a href="">Chromium</a>, <a href="">Chrome</a> und <a href="">Safari</a>.</p>
-		
-		<div class="panel">
-			<h3 class="lang_de">was kann simplescope?</h3>
-			<p class="lang_de">Nicht viel, und das ist gut so. <strong>simplescope</strong> erlaubt es Aufgaben als kurze Textnotizen zu organisieren und zu speichern.</p>
-			
-			<div class="usecase"><img class="icon add" />
-				<span class="text lang_de"><div><p>Benutze Trenner, um Gruppen von Aufgaben abzugrenzen. Ein Trenner wird erstellt, wenn du eine Aufgabe ohne Text hinzuf&uuml;gst.</p></div></p></span>
-			</div>
-			
-			<div class="usecase">
-				<img class="icon"/></a>
-				<div class="text lang_de"><div><p>Ziehe und verschiebe einzelne Aufgaben</p></div></div>
-			</div>
-			<div class="usecase"><img class="icon"/></a>
-				<span class="text lang_de">Bearbeite und l&ouml;sche Aufgaben per Klick auf die beiden Buttons. </span>
-			</div>
-			<div class="usecase"><img class="icon"/></a>
-				<span class="text lang_de">Markiere Aufgaben farblich, indem du dein Mausrad &uuml;ber dem Eintrag benutzt.</span>
-			</div>
-			<div class="usecase"><img class="icon"/></a>
-				<span class="text lang_de">Markiere Aufgaben farblich, indem du dein Mausrad &uuml;ber dem Eintrag benutzt.</span>
+
+		<noscript>
+
+			<div class="colorboxes no_js">
+				<div class="color0"></div>
+				<div class="color1"></div>
+				<div class="color2"></div>
+				<div class="color3"></div>
+				<div class="color4"></div>
+				<div class="color5"></div>
+
+				<br class="clear" />
 			</div>
 
-		</div>
-		
-		
-		<div class="panel">
-			<h3 class="lang_de">wie benutze ich simplescope?</h3>
-			<p class="lang_de">somethingsomethingsomething</p>
-		
-		</div>
-	
-	
+			<h1>simple.scope</h1>
+			<h2>a minimalist task organizer.</h2>
+		</noscript>
+
 	</div>
-	<div id="footer">
-	
-	
+
+
+	<div id="content">
+		<section id="top">
+			<p><em>simple.scope</em> is a minimalist organization tool. Use it to create, edit, sort, prioritize, and delete plain text notes. <em>simple.scope</em> can be used without an internet connection and is currently available for recent versions of WebKit- and Blink-based desktop web browsers such as <a href="https://www.google.com/chrome/" target="_blank">Chrome</a>, <a href="http://www.chromium.org/" target="_blank">Chromium</a> and <a href="https://www.apple.com/safari/" target="_blank">Safari</a>.</p>
+		</section>
+
+
+		<div class="img_wrap">
+			<img class="screenshot_main" src="img/screenshot_main.jpg" alt="A screenshot showing a Chromium browser window running simple.scope with some demo content." />
+
+			<img class="bottom_fade" src="img/img_wrap_fadeout.png" />
+		</div>
+
+		<br class="clear" />
+
+
+		<section>
+						<div class="downloads">
+				<a class="color3">
+					<span>try the demo</span>
+				</a>
+
+				<a class="color4">
+					<span>download as a single file</span>
+				</a>
+
+				<a class="color2">
+					<span>browse source code</span>
+				</a>
+
+				<br class="clear" />
+			</div>
+
+		</section>
+		
+		<section>
+			<h3>What are the features?</h3>
+			<p>There aren't many, and that's part of the concept.</p>
+
+			<ul>
+				<li><em>simple.scope</em> lets you organize text notes. There are two columns you can place notes in by <b>dragging and dropping</b>.</li>
+
+				<li>Click the text on a note to <b>edit</b> it. To <b>create</b> a new note, use the text fields and the <em>plus</em> button (keyboard: <em>Ctrl/Cmd&nbsp;+&nbsp;Enter</em>) at the bottom. If you do not enter any text, a <b>separator</b> item will be created.</li>
+
+
+				<li>Change a note's <b>color</b> by using your mouse wheel over the <em>minus</em> or <em>plus</em> button.</li>
+
+				<li>To <b>delete</b> a note, click the <em>minus</em> button and confirm your decision with a second click.</li>
+			</ul>
+
+		</section>
+
+
+		<section>
+			<h3>So, this is yet another to-do list tool, right?</h3>
+			<p><i title="German: &quot;Yes and no&quot;">Jein.</i></p>
+			<p>You can use <em>simple.scope</em> to manage your to-dos, but there is nobody forcing you to do so. Create, re-arrange and color notes any way you want; the application does not define a dedicated workflow or meanings for your notes' texts, order or color. For instance, you may...</p>
+
+			<ul>
+				<li>...store open tasks as notes in the left column and move them to the right once they're done.</li>
+				<li>...sort your notes or use traffic light colors to mark priorities.</li>
+				<li>...use notes for storing code snippets: Java is red, JavaScript is blue, Python is green.</li>
+				<li>...use notes like you would use Post-its.</li>
+				<li>...do something completely different, I don't mind.</li>
+			</ul>
+
+			<p>Yet, there are limits in terms of use cases. You're not able to stash away notes into folders, use tags, set up reminders or share notes with other people. Keep it simple instead and use <em>simple.scope</em> for storing transient knowledge. Jot down your notes and goals for your workweek, not the booking information for next year's vacation.</p>
+			
+		</section>
+
+		<section>
+			<h3>Where does <em>simple.scope</em> store my data?</h3>
+			<p>Everything is stored in your local web browser only, using <em><a href="https://developer.mozilla.org/en-US/docs/Web/Guide/API/DOM/Storage#localStorage" target="_blank">localStorage</a></em>. Your current notes are stored until you erase your browser's cache. This means that there is no network communication at all except for downloading the application from the server. It also means that <em>simple.scope</em> instances running on different browsers or machines will be completely independent.</p>
+
+		</section>
+
+		
+		<section>
+			<h3>Where do I get it?</h3>
+			<p>If you want to have a quick look at the application, you may just visit the demo page. It contains the fully-featured application, but will reset any changes as soon as you close the browser tab running <em>simple.scope</em>.</p>
+
+			<p>Pick the download link if you want to download and run the application locally as a single file.</p>
+
+			<p>The full source code is available at <em><a href="https://github.com/stefan-girlich/SimpleScope/" target="_blank">github.com/stefan-girlich/SimpleScope</a></em>.</p>
+
+			<div class="downloads">
+				<a class="color3">
+					<span>try the demo</span>
+				</a>
+
+				<a class="color4">
+					<span>download as a single file</span>
+				</a>
+
+				<a href="https://github.com/stefan-girlich/SimpleScope/" target="_blank"class="color2">
+					<span>browse source code</span>
+				</a>
+
+				<br class="clear" />
+			</div>
+			
+		</section>
+
+		<section>
+			<h3>Any further plans?</h3>
+			<p>Lots! :)</p>
+
+			<h4>Improve text input</h4>
+			<p>Currently, you have to click the label text itself to be able to edit it; clicking the imaginary box around it won't suffice. Also, the caret for text editing will be placed at the end of the first line of text instead of being placed close to the click position. Not cool!</p>
+
+			<h4>Fix Apple Magic Mouse bug</h4>
+			<p>It seems like Apple's Magic Mouse (and possibly also MacBook touchpads) is firing many scoll events for a single swipe/scroll move. This does not affect saving note color information correctly, but unless you scroll really carefully, the displayed color may get stuck between to actual note color presets.</p>
+
+
+			<h4>Cross-browser compatibility</h4>
+			<p>This includes recent Firefox, Opera and Internet Explorer.</p>
+
+			<h4>Touch interface</h4>
+			<p>This might require a different UI approach.</p>
+
+			<h4>Server-side storage</h4>
+			<p>Manage your notes from different workstations.</p>
+
+			<h4>Native mobile clients</h4>
+			<p>Probably faster and better to use than a web UI.</p>
+
+			<h4></h4>
+			<p></p>
+		</section>
+
+		<section>
+			<h3>Who can I reach you?</h3>
+			<p>Find a link to my GitHub profile page and my e-mail address at the bottom of this page. If you have found a bug or have a suggestion for improvement, please post it at the GitHub project page for increased visibility.</p>
+
+		</section>
+
 	</div>
+
 </div>
 
+<footer>
 
+	<div id="logo">
+		<span>simple.scope</span>
+		<br />
+		<a href="https://github.com/stefan-girlich" target="_blank">github.com/stefan-girlich</a>
+	</div>
+
+
+	<div id="contact">
+	&copy; Stefan Girlich, <span class="year">2014</span><br />
+	<a href="mailto: stefan . girlich at g mail .com">stefan . girlich [at] g mail .com</a>
+	</div>
+</footer>
+
+<script>
+$('footer .year').html(new Date().getFullYear());
+var a_mail = $('footer #contact a');
+newHref = a_mail.attr('href').replace('at', '@').split(' ').join('');
+a_mail.attr('href' , newHref);
+a_mail.html(newHref.replace('mailto:', ''));
+</script>
 
 </body>
 </html>
