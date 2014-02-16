@@ -147,7 +147,7 @@ simplescope.ui.Column = function Column(entries) {
 
 	var $add_panel = $('<div class="panel color1"></div>');
 	var $btn_add = $('<div class="btn add"></div>');
-	var $text_input = $('<span contentEditable="true" class="tf"></span');
+	var $text_input = $('<span contentEditable="true" spellcheck="false" class="tf"></span');
 
 	$add_panel.append($text_input, $btn_add);
 	this.$el.append($add_panel);
