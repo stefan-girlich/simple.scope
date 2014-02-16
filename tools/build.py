@@ -15,6 +15,7 @@ OUT_BASEPATH = '../app/'
 
 # output file name
 OUT_FILENAME_MIN = 'simplescope.bundle.min.htm'
+OUT_FILENAME_MIN_DEMO = 'simplescope.demo.bundle.min.htm'
 
 
 # returns a (text) file's contents
@@ -25,7 +26,7 @@ def getFileContents(filename):
 
 # builds the actual release file and stores it in its final location
 # releaseMode: a string identifying the release mode; None is default
-def buildReleaseBundle(releaseMode=None):
+def buildReleaseBundle(out_filename, releaseMode=None):
 	# iterate over HTML by lines,
 	# find JS and CSS refs and replace them with their resource file contents
 	iter_html = iter(app_html_data.splitlines())
@@ -48,15 +49,42 @@ def buildReleaseBundle(releaseMode=None):
 				src = matchJS.group(1)
 				fileContent = getFileContents(src)
 
-				iter_js = iter(fileContent.splitlines())
-				for k in iter_js:
-					print '===>>> ' + k
+				if not releaseMode is None:
+					# non-default release mode
+
+					# iterate through JS content by lines
+					# find and apply in-code build instructions
+					fileContentMod = ''
+					iter_js = iter(fileContent.splitlines())
+					for k in iter_js:
+						# does the line contain a build marker?
+						matchBuildMod = re.match('.*//.*#build:'+releaseMode+':([a-zA-Z0-9_]+)\s*.*', k)
+						if not matchBuildMod is None:
+
+							# ignore line
+							def drop():
+								pass
+
+							actions = {
+								'DROP':	drop
+							}
+
+							action = matchBuildMod.group(1)
+							actions[action]()
+
+						else:
+							# append unmodified line
+							fileContentMod += k + '\n'
+				else:
+					# default mode, ignore all in-code build instructions
+					fileContentMod = fileContent
 
 				# only compress non-jQuery JS content
 				if not src.startswith('jquery'):
-					fileContent = minify(fileContent, mangle=True)
+					fileContent = minify(fileContentMod, mangle=True)
 
 				app_html_new += '<script>'+fileContent+'</script>'
+
 
 		else:	# line contains CSS sheet ref
 			href = matchCSS.group(1)
@@ -81,7 +109,7 @@ def buildReleaseBundle(releaseMode=None):
 			app_html_new += '<style type="text/css">'+compress(fileContentBase64)+'</style>'
 
 		# write output to file
-		with open(OUT_BASEPATH + OUT_FILENAME_MIN, 'w') as destFile:
+		with open(OUT_BASEPATH + out_filename, 'w') as destFile:
 			destFile.write(app_html_new)
 
 # // buildReleaseBundle
@@ -93,7 +121,8 @@ def buildReleaseBundle(releaseMode=None):
 with open(APP_BASEPATH + 'index.htm', 'r') as srcFile:
 	app_html_data = srcFile.read()
 
-buildReleaseBundle()
+#buildReleaseBundle(OUT_FILENAME_MIN)
+buildReleaseBundle(OUT_FILENAME_MIN_DEMO, 'demo')
 
 
 

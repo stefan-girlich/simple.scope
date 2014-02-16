@@ -5,9 +5,11 @@ $(function() {
 	var storage = new simplescope.db.LocalStorage(),
 		data = storage.load();
 
-	if(!data) {
-		data = simplescope.dummydata.introduction;
-	}
+	if(!data) {	// #build:demo:DROP
+		// TODO impl ADD action in build.py for less redundant build actions
+		data = simplescope.dummydata.introduction_demo;
+		data = simplescope.dummydata.introduction; // #build:demo:DROP
+	} // #build:demo:DROP
 
 	var columns = [];
 	for(var i=0; i<data.length; i++) {
