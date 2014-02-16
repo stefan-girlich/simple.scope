@@ -1,15 +1,6 @@
-/** === TODO ===
-- adapt drag changes in logic/db
-
-*/
-
 $(function() {
 
 	var body = $('body');
-
-
-	/* !!!!!!!!!!!!!!!!!  DEBUG  !!!!!!!!!!!!!!!!! 
-	dummy data */
 
 	var storage = new simplescope.db.LocalStorage(),
 		data = storage.load();
