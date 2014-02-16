@@ -56,7 +56,7 @@ simplescope.ui.Entry = function Entry(label, color, callback, $domEl) {
 		// TODO color
 	}
 
-	this.delete = function() {
+	this.destroy = function() {
 
 		var $delete_wrap = $('<div class="entry placeholder"></div>');
 		$delete_wrap.height(this.$el.outerHeight(true));
@@ -141,7 +141,7 @@ simplescope.ui.Entry = function Entry(label, color, callback, $domEl) {
 		if(t === $btn_del[0]) {
 
 			if(is_sep) {
-				self.delete();
+				self.destroy();
 				return;
 			}
 
@@ -157,7 +157,7 @@ simplescope.ui.Entry = function Entry(label, color, callback, $domEl) {
 
 			toggleSafetyCtrl(false);
 
-			self.delete();
+			self.destroy();
 			self.$el.data('buffered_action', null)
 		}
 	}
