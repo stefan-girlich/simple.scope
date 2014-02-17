@@ -5,8 +5,8 @@ simple.scope is a minimalist organization tool for recent versions of WebKit- an
 ## app/
 This project contains the actual web app.
 
-## website/
-This project contains the simple.scope project website.
+## /
+This root directory contains the simple.scope project website.
 
 
 
