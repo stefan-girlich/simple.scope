@@ -10,13 +10,13 @@ import os
 import zipfile
 
 # TODO DYN
-VERSION="1.0"
+VERSION="0.8"
 
 # base path where app resources are stored
 APP_BASEPATH = '../app/'
 
 # output directory
-OUT_BASEPATH = '../website/build/'
+OUT_BASEPATH = '..//build/'
 
 # output file name
 OUT_FILENAME_MIN = 'simplescope.'+VERSION+'.bundle.min.htm'
