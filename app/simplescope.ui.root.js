@@ -47,6 +47,8 @@ simplescope.ui.Root = function Root(cols) {
 				// disable text input for entries to prevent erronous selections while dragging
 				cols[i].setEntriesInputEnabled(false);
 
+				// prevent dragging for all entries currently not dragged
+				cols[i].setEntriesDragEnabled(false, draggedEntry);
 			}
 		},
 
@@ -143,6 +145,9 @@ simplescope.ui.Root = function Root(cols) {
 				for(var i=0; i<cols.length; i++) {
 					// adopt DOM changes into internal data structure
 					cols[i].update(true);
+
+					// enabled dragging for all Entries in the Column
+					cols[i].setEntriesDragEnabled(true);
 				}
 
 				cb.onChange();

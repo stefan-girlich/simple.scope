@@ -39,9 +39,11 @@ simplescope.ui.Entry = function Entry(label, color, callback, $domEl) {
 		cb = callback || {
 			onEdit: function() {},
 			onDelete: function() {},
-			onDragStart: function(el) {}
+			onEntryDragStart: function(el) {}
 		};
 	}
+
+	this.dragEnabled = true;
 
 	this.setInputEnabled = function(enabled) {
 		$label.attr('contentEditable', enabled ? 'true' : 'false')
@@ -220,7 +222,12 @@ simplescope.ui.Entry = function Entry(label, color, callback, $domEl) {
 		}
 
 		if($(evt.target)[0] === $label[0] && textInputMode) {
-			// allow, drag text selection, prevent drag-moving the entry
+			// allow drag text selection, prevent drag-moving the entry
+			return;
+		}
+
+		if(!self.dragEnabled) {
+			// do not listen for drag movement when not enabled
 			return;
 		}
 

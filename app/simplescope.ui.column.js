@@ -45,6 +45,15 @@ simplescope.ui.Column = function Column(entries) {
 		});
 	}
 
+	// not: an Entry not enable/disable for drag, opttional
+	this.setEntriesDragEnabled = function(enabled, not) {
+		entries.forEach(function(el) {
+			if(!not || not !== el)	{
+				el.dragEnabled = enabled;
+			}
+		});
+	}
+
 	// TODO DOC an entry is dragged over the col
 	this.onEntryDrag = function(dragEntry, evt) {
 
