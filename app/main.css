@@ -1,0 +1,165 @@
+@CHARSET "ISO-8859-1";
+
+* {
+	margin: 0;
+	padding: 0;
+	border: 0;
+}
+
+*:not(.tf) {
+	  -moz-user-select: none;
+	  -khtml-user-select: none;
+	  -webkit-user-select: none;
+	  user-select: none;
+}
+.mouseDisabled {
+	pointer-events: none;
+}
+
+html {
+}
+
+body {
+	background: #191919;
+	width: 100%;
+	height: 100%;
+	overflow-x: hidden;
+}
+
+
+#content {
+	padding: 2%;
+}
+
+.col {
+	width: 50%;
+	float: left;
+	font-size: 20px;
+	color: white;
+	font-family: sans-serif;
+	font-weight: bold;
+}
+
+.panel, .entry {
+	position: relative;
+	float: left;
+	background: inherit;
+	width: 76%;
+	padding: 8px 20% 8px 2%;
+	margin-right: 2%;
+	margin-bottom: 2px;
+	overflow: hidden;
+	cursor: pointer;
+	-webkit-transition: background 0.2s, -webkit-transform 0.1s ease-out;
+}
+
+.entry.placeholder {
+	width: 100%;
+	height: 0px;
+	padding: 0;
+	margin: 0;
+	-webkit-transition: height 0.2s;
+}
+.entry.placeholder.deleted {
+	height: 0;
+	-webkit-transition: height 0.75s;
+}
+
+.entry.placeholder.no_anim {
+	-webkit-transition: none !important;
+}
+.entry.floating {
+	position: absolute;
+	z-index: 1000;
+	-webkit-box-shadow: 0 0 25px black;
+	-webkit-transform: scale(1.05, 1.05);
+}
+
+.color0 {	background-color: #d0d0d0; }
+.color1 {	background-color: #404040; }
+.color2 {	background-color: #2c6ab4; }
+.color3 {	background-color: #cccc00; }
+.color4 {	background-color: #bb0000; }
+.color5 {	background-color: #00AB00; }
+
+
+.col .entry .btn,
+.col .panel .btn {
+	position: absolute;
+	top: 0;
+	width: 10%;
+	height: 100%;
+	opacity: 1;
+	-webkit-transition: opacity 0.25s;
+	background-position: center center;
+	background-repeat: no-repeat;
+	background-size: 12px 12px;
+	background-color: rgba(255, 255, 255, 0.05);
+}
+
+.col .entry .btn.edit {
+	right: 10%;
+}
+.col .entry .btn.delete {
+	right: 0;
+	background-image: url('icon_delete.png');
+}
+
+.col .entry .btn:HOVER,
+.col .panel .btn:HOVER {
+	background-color: rgba(0,0,0,0.2);
+}
+
+.col .entry.floating .btn {
+	opacity: 0;
+}
+
+.col .entry .btn.accept {
+	display: none;
+	right: 0;
+	background-image: url('icon_accept.png');
+}
+.col .entry .btn.decline {
+	display: none;
+	right: 10%;
+	background-image: url('icon_decline.png');
+}
+
+.col .entry.separator .btn.edit {
+	display: none !important;
+}
+
+.col .panel {
+	margin-top: 10px;
+	cursor: default;
+}
+
+.col .panel .tf {
+	float: left;
+	position: relative;
+	min-height: 23px;
+	width: 95%;
+	font-size: 20px;
+	font-weight: bold;
+	border: 0;
+}
+
+
+.col .panel .btn.add {
+	right: 0;
+	width: 10%;
+	background-image: url('icon_plus.png');
+	cursor: pointer;
+}
+
+.tf {
+	outline: 0 solid transparent;
+}
+.tf[contentEditable=true] {
+	cursor: text;
+}
+
+/** TODO cross browser / vendor prefix */
+.tf::selection {
+	background: rgba(255, 255, 255, 0.4);
+}
