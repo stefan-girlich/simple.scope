@@ -16,7 +16,7 @@ VERSION="0.2"
 APP_BASEPATH = '../app/'
 
 # output directory
-OUT_BASEPATH = '..//build/'
+OUT_BASEPATH = '../build/'
 
 # output file name
 OUT_FILENAME_MIN = 'simplescope.'+VERSION+'.bundle.min.htm'
