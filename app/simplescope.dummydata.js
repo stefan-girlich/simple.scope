@@ -42,7 +42,7 @@ simplescope.dummydata = {
 // create enhanced introduction for the live demo version
 var dummy_intro_demo = $.extend(true, [], simplescope.dummydata.introduction);
 dummy_intro_demo[0].splice(2, 0, {
-	'label': 	'This is the live demo, changes will be discarded when your refresh or close this website.',
+	'label': 	'This is the live demo, changes will be discarded when you refresh or close this website.',
 	'color':	4
 });
 simplescope.dummydata.introduction_demo = dummy_intro_demo;
