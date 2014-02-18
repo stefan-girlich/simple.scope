@@ -19,7 +19,7 @@ Opening website/index.htm will show you the website containing further informati
 ## changelog
 
 
-###0.3 UNRELEASED
+###0.3
 * separators can now be made note by clicking
 * whitespace in notes is now handled as empty input
 * allow dragging on buttons
