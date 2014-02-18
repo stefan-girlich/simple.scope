@@ -329,6 +329,8 @@ simplescope.ui.Entry = function Entry(label, color, callback, $domEl) {
 
 	function onButtonMouseWheel(evt, delta, deltaX, deltaY) {
 
+		evt.preventDefault();
+
 		color += deltaY > 0 ? 1 : -1;
 
 		if(color < 0) {
