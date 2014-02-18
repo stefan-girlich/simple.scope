@@ -222,7 +222,7 @@ simplescope.ui.Entry = function Entry(label, color, callback, $domEl) {
 			return;
 		}
 
-		if(labelFocussed && $(evt.target)[0] === $label[0] || $label.has($(evt.target))) {
+		if(labelFocussed && ($(evt.target)[0] === $label[0] || $label.has($(evt.target)))) {
 			// allow drag text selection, prevent drag-moving the entry
 			return;
 		}

@@ -40,6 +40,8 @@ initial release based on the legacy version
 
 * improve text input: The caret for text editing will be placed at the end of the first line of text instead of being placed close to the click position. Not cool!
 
+* handle tabulator chars in text
+
 * fix apple magic mouse bug
 
 * fix broken label word-wrap when not in edit mode
@@ -47,6 +49,10 @@ initial release based on the legacy version
 * cross-browser compatibility: Firefox
 * cross-browser compatibility: Opera
 * cross-browser compatibility: Internet Explorer
+
+
+
+
 
 ### features
 * editable separators on click
