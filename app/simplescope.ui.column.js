@@ -77,14 +77,16 @@ simplescope.ui.Column = function Column(entries) {
 			ix++;
 		});
 
-		$placeholders.css('height', 0);
+		//console.log($phActive)
 
-		$phClosest.css('height', drag_el.outerHeight(true));
+		if(!$phActive || $phActive[0] !== $phClosest[0]) {
+			
+			$phActive = $phClosest;
+			$placeholders.not($phActive).css('height', 0);
+			$phActive.css('height', drag_el.outerHeight(true));
+			cb.onDropPositionChange(self, $phActive);
+		}
 
-		// TODO fire only if there is an actual change
-		cb.onDropPositionChange(self, $phClosest);
-
-		$phActive = $phClosest;
 	}
 
 	/** Sets all existing placeholders to their default state. */
