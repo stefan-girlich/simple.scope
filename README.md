@@ -42,13 +42,6 @@ initial release based on the legacy version
 
 * fix apple magic mouse bug
 
-* filter HTML input:
-$('.plain').on('paste', function (e) {
-    e.preventDefault();
-    var text = (e.originalEvent || e).clipboardData.getData('text/plain') || prompt('Paste something..');
-    document.execCommand('insertText', false, text);
-});
-
 * fix broken label word-wrap when not in edit mode
 
 * cross-browser compatibility: Firefox

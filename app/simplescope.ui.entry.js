@@ -13,7 +13,7 @@ simplescope.ui.Entry = function Entry(label, color, callback, $domEl) {
 	var label = label || null, color = color || 0,
 		cb;
 
-	var textInputMode = false;
+	var labelFocussed = false;
 
 	// === API ===
 
@@ -173,7 +173,7 @@ simplescope.ui.Entry = function Entry(label, color, callback, $domEl) {
 	function enterTextInputMode() {
 		// already in text input mode, nothing to do
 		// TODO reading from DOM is bad practice
-		if(textInputMode) {
+		if(labelFocussed) {
 			return;
 		}
 
@@ -215,14 +215,14 @@ simplescope.ui.Entry = function Entry(label, color, callback, $domEl) {
 			x: evt.pageX - $el.position().left,
 			y: evt.pageY - $el.position().top
 		};
-		
+
 		// TODO bad practice: read from DOM
 		if($(evt.target).hasClass('btn')) {
 			// prevent dragging on buttons
 			return;
 		}
 
-		if($(evt.target)[0] === $label[0] && textInputMode) {
+		if(labelFocussed && $(evt.target)[0] === $label[0] || $label.has($(evt.target))) {
 			// allow drag text selection, prevent drag-moving the entry
 			return;
 		}
@@ -292,7 +292,7 @@ simplescope.ui.Entry = function Entry(label, color, callback, $domEl) {
 	}
 
 	function onLabelFocus(evt) {
-		textInputMode = true;
+		labelFocussed = true;
 	}
 
 	function onLabelBlur(evt) {
@@ -300,7 +300,7 @@ simplescope.ui.Entry = function Entry(label, color, callback, $domEl) {
 		/* NOTE: will also be triggered when blurring through click on button */
 
 		self.setInputEnabled(false);
-		textInputMode = false;
+		labelFocussed = false;
 
 		if($label.html().length <= 0) {
 			self.$el.addClass('separator');
