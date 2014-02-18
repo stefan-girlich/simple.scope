@@ -10,7 +10,7 @@ import os
 import zipfile
 
 # TODO DYN
-VERSION="0.2"
+VERSION="0.3"
 
 # base path where app resources are stored
 APP_BASEPATH = '../app/'
