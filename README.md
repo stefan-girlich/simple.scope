@@ -34,6 +34,8 @@ initial release based on the legacy version
 
 * improve text input: Currently, you have to click the label text itself to be able to edit it; clicking the imaginary box around it won't suffice. Also, the caret for text editing will be placed at the end of the first line of text instead of being placed close to the click position. Not cool!
 
+* ugly jumping when drag-moving with dragstart on a multi-line white space filled label
+
 * fix apple magic mouse bug
 
 * cross-browser compatibility: Firefox
