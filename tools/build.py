@@ -137,8 +137,6 @@ zip_filename = '.'.join(zip_filename) + '.zip'
 zf = zipfile.ZipFile(OUT_BASEPATH + zip_filename, 'w')
 zf.write(OUT_BASEPATH + OUT_FILENAME_MIN, OUT_FILENAME_MIN)
 zf.close()
-os.remove(OUT_BASEPATH + OUT_FILENAME_MIN)
-
 
 
 
