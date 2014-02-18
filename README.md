@@ -55,7 +55,6 @@ initial release based on the legacy version
 
 
 ### features
-* editable separators on click
 * no demo anymore, fully featured live version on GitHub
 
 * multi-select

@@ -13,13 +13,14 @@ simplescope.ui.Entry = function Entry(label, color, callback, $domEl) {
 	var label = label || null, color = color || 0,
 		cb;
 
+	var is_sep = false;
+
 	var labelFocussed = false;
 
 	// === API ===
 
 	this.setLabel = function(label) {
 		this.label = label || null;
-		// TODO apply
 	}
 
 	this.getLabel= function() {
@@ -53,8 +54,10 @@ simplescope.ui.Entry = function Entry(label, color, callback, $domEl) {
 	TODO UNUSED
 	*/
 	this.update = function() {
+
 		label = $label.html();
-		is_sep = !label || label.length <= 0;
+
+		setSeparatorMode(label);
 		// TODO color
 	}
 
@@ -79,22 +82,18 @@ simplescope.ui.Entry = function Entry(label, color, callback, $domEl) {
 	// defaults
 	this.setCallback(callback);
 
-	// TODO init label through setter in favor of checks?
-	var is_sep = !label || label.length <= 0;
 
 
 	// === initialize UI elements ===
-
-
 	var $label, $btn_del, $btn_acc, $btn_decl;
 
 	if(!$domEl) {
 		// no existing DOM element given, create new one
 
-		this.$el = $('<div class="entry color' + color + (is_sep ? ' separator ' : '') +'"></div>');
+		this.$el = $('<div class="entry color' + color + '"></div>');
 
 		// TODO spell check could be optional
-		$label = $('<span contentEditable="false" spellcheck="false" class="label tf">'+(is_sep ? '' : label)+'</span>');
+		$label = $('<span contentEditable="false" spellcheck="false" class="label tf">'+(label || '')+'</span>');
 		$btn_del = $('<div class="btn delete start_delete"></div>');
 		$btn_acc = $('<div class="btn accept"></div>');
 		$btn_decl = $('<div class="btn decline"></div>');
@@ -129,6 +128,9 @@ simplescope.ui.Entry = function Entry(label, color, callback, $domEl) {
 	$btn_acc.click(onButtonClick);
 
 	$label.on('paste', simplescope.ui.onPaste);
+
+	// apply separator mode based on content
+	setSeparatorMode(label);
 
 	/* 
 	TODO instead of using $.data with separate keys,
@@ -252,10 +254,25 @@ simplescope.ui.Entry = function Entry(label, color, callback, $domEl) {
 			y: evt.pageY - $currTrgt.position().top
 		};
 
-
 		if(mouseDownPos && mouseDownPos.x === mouseUpPos.x 
 			&& mouseDownPos.y === mouseUpPos.y) {
 			// it's a click!
+
+			if(trgt.hasClass('btn')) {
+				// simple button click, do nothing
+				return;
+			}
+
+			// separator clicked, show text input
+			if(is_sep) {
+				$label.html('&nbsp;')
+				setSeparatorMode(label);
+				self.setInputEnabled(true);
+
+				// TODO move to setInputEnabled ?
+				$label.focus()
+				return;
+			}
 
 			if(trgt[0] === $label[0]) {
 				// label clicked
@@ -296,22 +313,23 @@ simplescope.ui.Entry = function Entry(label, color, callback, $domEl) {
 	}
 
 	function onLabelBlur(evt) {
+		if($label.text().trim().length <= 0) {
+			$label.html('');
+		}
 
 		/* NOTE: will also be triggered when blurring through click on button */
 
 		self.setInputEnabled(false);
 		labelFocussed = false;
 
-		if($label.html().length <= 0) {
-			self.$el.addClass('separator');
-		}else {
-			self.$el.removeClass('separator');
-		}
-
 		// handle unfocussing as "save changes" action
 		self.update();
 		toggleSafetyCtrl(false);
 		self.$el.data('buffered_action', null);
+
+		// make separator or not
+		setSeparatorMode(label);
+
 		cb.onEdit();
 	}
 
@@ -332,5 +350,16 @@ simplescope.ui.Entry = function Entry(label, color, callback, $domEl) {
 		self.$el.addClass('color' + color);
 
 		cb.onEdit();
+	}
+
+	function setSeparatorMode(lbl) {
+
+		is_sep = !lbl || lbl.length <= 0;
+
+		if(is_sep) {
+			self.$el.addClass('separator');
+		}else {
+			self.$el.removeClass('separator');
+		}
 	}
 };
