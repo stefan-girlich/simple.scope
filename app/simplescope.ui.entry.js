@@ -39,7 +39,7 @@ simplescope.ui.Entry = function Entry(label, color, callback, $domEl) {
 		cb = callback || {
 			onEdit: function() {},
 			onDelete: function() {},
-			onEntryDragStart: function(el) {}
+			onEntryDragStart: function(el, evt, mouseDownOffset) {}
 		};
 	}
 
@@ -128,6 +128,7 @@ simplescope.ui.Entry = function Entry(label, color, callback, $domEl) {
 	$btn_decl.click(onButtonClick);
 	$btn_acc.click(onButtonClick);
 
+	$label.on('paste', simplescope.ui.onPaste);
 
 	/* 
 	TODO instead of using $.data with separate keys,
@@ -214,7 +215,7 @@ simplescope.ui.Entry = function Entry(label, color, callback, $domEl) {
 			x: evt.pageX - $el.position().left,
 			y: evt.pageY - $el.position().top
 		};
-
+		
 		// TODO bad practice: read from DOM
 		if($(evt.target).hasClass('btn')) {
 			// prevent dragging on buttons
@@ -286,7 +287,7 @@ simplescope.ui.Entry = function Entry(label, color, callback, $domEl) {
 		self.setInputEnabled(false);
 
 		// drag handling are handled by higher instances
-		cb.onEntryDragStart(self, evt);
+		cb.onEntryDragStart(self, evt, mouseDownPos);
 
 	}
 

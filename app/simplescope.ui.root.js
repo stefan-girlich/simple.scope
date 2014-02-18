@@ -24,13 +24,13 @@ simplescope.ui.Root = function Root(cols) {
 
 			cb.onChange();
 		},
-		onEntryDragStart: function(dragEntry, evt) {
+		onEntryDragStart: function(dragEntry, evt, mouseDownPos) {
 			draggedEntry = dragEntry;
 
 			var el = draggedEntry.$el;
 
 			// store dragstart/mousedown offset and original pos
-			dragstart_offset = {x: evt.offsetX, y: evt.offsetY};
+			dragstart_offset = {x: mouseDownPos.x, y: mouseDownPos.y};
 			dragstart_pos	 = {x: el.position().left, y: el.position().top};
 		
 			// apply absolute style

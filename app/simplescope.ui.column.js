@@ -15,13 +15,13 @@ simplescope.ui.Column = function Column(entries) {
 			onDelete: function() {
 				cb.onChange();
 			},
-			onEntryDragStart: function(dragEntry, evt) {
+			onEntryDragStart: function(dragEntry, evt, mouseDownOffset) {
 				//self.onEntryDrag(dragEntry, evt);	// TESTEEEEINGNGSDNG
 				// $phActive = dragEntry.$el;
 
 				// TODO obtaining the placeholder reference like this seems a bit nasty
 				cb.onDropPositionChange(self, dragEntry.$el.next('.placeholder'));
-				cb.onEntryDragStart(dragEntry, evt);
+				cb.onEntryDragStart(dragEntry, evt, mouseDownOffset);
 			}
 		},
 		cb,		// callback for this Column
@@ -77,7 +77,6 @@ simplescope.ui.Column = function Column(entries) {
 			ix++;
 		});
 
-		//console.log($phActive)
 
 		if(!$phActive || $phActive[0] !== $phClosest[0]) {
 			
@@ -167,6 +166,9 @@ simplescope.ui.Column = function Column(entries) {
 	$text_input.focus(function() {
 		$(window.document).keypress(onKeyPress);
 	});
+
+	// strip rich-media information from input
+	$text_input.on('paste', simplescope.ui.onPaste);
 
 	// on text input blur: stop listening for key presses
 	$text_input.blur(function() {

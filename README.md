@@ -22,6 +22,8 @@ Opening website/index.htm will show you the website containing further informati
 ###0.3 UNRELEASED
 * fixed bug where bezerk-dragging could live notes stack in floating state
 * fixed "stuttering" of opening gaps between notes when entry dragged
+* fixed initial "jumping" when dragging multi-line note
+* fix bug where pasted HTML content (e.g. copy-paste from website or other note) would be displayed including all formatings, strip down to plain-text data instead
 * let dropped note tween to final location smoooothly
 * make whole rectangular text input area clickable instead of only actual text
 
@@ -36,13 +38,16 @@ initial release based on the legacy version
 
 ### fix issues
 
-* improve text input: Also, the caret for text editing will be placed at the end of the first line of text instead of being placed close to the click position. Not cool!
-
-* visual bug: jumping when drag-moving with dragstart on a multi-line label, probably due to nested divs for each line
+* improve text input: The caret for text editing will be placed at the end of the first line of text instead of being placed close to the click position. Not cool!
 
 * fix apple magic mouse bug
 
-* filter HTML input
+* filter HTML input:
+$('.plain').on('paste', function (e) {
+    e.preventDefault();
+    var text = (e.originalEvent || e).clipboardData.getData('text/plain') || prompt('Paste something..');
+    document.execCommand('insertText', false, text);
+});
 
 * fix broken label word-wrap when not in edit mode
 
