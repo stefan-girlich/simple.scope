@@ -20,12 +20,15 @@ Opening website/index.htm will show you the website containing further informati
 
 
 ###0.3 UNRELEASED
-* fixed bug where bezerk-dragging could live notes stack in floating state
-* fixed "stuttering" of opening gaps between notes when entry dragged
-* fixed initial "jumping" when dragging multi-line note
-* fix bug where pasted HTML content (e.g. copy-paste from website or other note) would be displayed including all formatings, strip down to plain-text data instead
+* separators can now be made note by clicking
+* whitespace in notes is now handled as empty input
+* allow dragging on buttons
 * let dropped note tween to final location smoooothly
 * make whole rectangular text input area clickable instead of only actual text
+* fixed "stuttering" of opening gaps between notes when entry dragged
+* fixed initial "jumping" when dragging multi-line note
+* fixed bug where pasted HTML content (e.g. copy-paste from website or other note) would be displayed including all formattings, strip down to plain-text data instead
+* fixed bug where bezerk-dragging could live notes stack in floating state
 
 ###0.2
 first release after rewrite and redesign

@@ -218,12 +218,6 @@ simplescope.ui.Entry = function Entry(label, color, callback, $domEl) {
 			y: evt.pageY - $el.position().top
 		};
 
-		// TODO bad practice: read from DOM
-		if($(evt.target).hasClass('btn')) {
-			// prevent dragging on buttons
-			return;
-		}
-
 		if(labelFocussed && ($(evt.target)[0] === $label[0] || $label.has($(evt.target)))) {
 			// allow drag text selection, prevent drag-moving the entry
 			return;
