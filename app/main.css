@@ -74,6 +74,9 @@ body {
 	-webkit-box-shadow: 0 0 25px black;
 	-webkit-transform: scale(1.05, 1.05);
 }
+.entry.unfloating {
+	-webkit-transform: scale(1.0, 1.0);
+}
 
 .color0 {	background-color: #d0d0d0; }
 .color1 {	background-color: #404040; }

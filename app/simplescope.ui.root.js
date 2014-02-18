@@ -116,6 +116,8 @@ simplescope.ui.Root = function Root(cols) {
 			cols[i].$el.unbind('mouseleave', cols[i].$el.resetPlaceholders);
 		}
 
+		$drag_el.addClass('unfloating');
+
 		// element is not dragged anymore, animated it to its new position
 		$drag_el.stop().animate({
 			left: $focusPlaceholder.position().left,
@@ -126,7 +128,7 @@ simplescope.ui.Root = function Root(cols) {
 
 				// when the animation is completed: restore the overall default state
 
-				$drag_el.removeClass('floating');
+				$drag_el.removeClass('floating unfloating');
 				$drag_el.removeClass('mouseDisabled');
 				$drag_el.css({
 					left: 'auto',
