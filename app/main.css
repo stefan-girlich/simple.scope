@@ -157,6 +157,8 @@ body {
 
 .tf {
 	outline: 0 solid transparent;
+	float: left;
+	width: 100%;
 }
 .tf[contentEditable=true] {
 	cursor: text;

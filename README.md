@@ -23,6 +23,7 @@ Opening website/index.htm will show you the website containing further informati
 * fixed bug where bezerk-dragging could live notes stack in floating state
 * fixed "stuttering" of opening gaps between notes when entry dragged
 * let dropped note tween to final location smoooothly
+* make whole rectangular text input area clickable instead of only actual text
 
 ###0.2
 first release after rewrite and redesign
@@ -35,11 +36,15 @@ initial release based on the legacy version
 
 ### fix issues
 
-* improve text input: Currently, you have to click the label text itself to be able to edit it; clicking the imaginary box around it won't suffice. Also, the caret for text editing will be placed at the end of the first line of text instead of being placed close to the click position. Not cool!
+* improve text input: Also, the caret for text editing will be placed at the end of the first line of text instead of being placed close to the click position. Not cool!
 
 * visual bug: jumping when drag-moving with dragstart on a multi-line label, probably due to nested divs for each line
 
 * fix apple magic mouse bug
+
+* filter HTML input
+
+* fix broken label word-wrap when not in edit mode
 
 * cross-browser compatibility: Firefox
 * cross-browser compatibility: Opera
@@ -47,11 +52,16 @@ initial release based on the legacy version
 
 ### features
 * editable separators on click
-- no demo anymore, fully featured live version on
+* no demo anymore, fully featured live version on GitHub
+
+* multi-select
 
 * touch
 * server
 * native mobile clients
+
+
+
 
 ### improvements
 * implement setters using JS set/get
