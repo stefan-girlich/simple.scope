@@ -71,6 +71,16 @@ initial release based on the legacy version
 
 ### improvements
 * implement setters using JS set/get
+var constr = function Blub() {
+	var intern = null; Object.defineProperty(this, 'stuff', {
+		get: function() {
+
+			return intern
+		},
+		set: function(val) {intern = val + 100}
+	});
+}
+
 * HTML5 drag-and-drop API? seems to be slower in minimal test
 * introduce ID system to avoid scanning the whole simple.scope DOM subtree after changes
 * rewrite callbacks: object with functions (current) -> object props with "onstuffhashappened" naming

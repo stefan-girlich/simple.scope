@@ -13,10 +13,14 @@ simplescope.db.LocalStorage = function LocalStorage(storageKey) {
 		localStorage.setItem(storageKey, data); // #build:demo:DROP
 	}
 
-	this.load = function() {
+	this.load = function(cb) {
 		var data = localStorage.getItem(storageKey);
-		if(!data)	return null;
+		if(!data)	{
+			data = null;
+		}else {
+			data = JSON.parse(data);
+		}
 
-		return JSON.parse(data);
+		cb(data);
 	}
 };
