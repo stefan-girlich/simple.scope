@@ -10,7 +10,7 @@ import os
 import zipfile
 
 # TODO DYN
-VERSION="0.3"
+VERSION="0.3_SERVERTEST"
 
 # base path where app resources are stored
 APP_BASEPATH = '../app/'
@@ -19,7 +19,7 @@ APP_BASEPATH = '../app/'
 OUT_BASEPATH = '../build/'
 
 # output file name
-OUT_FILENAME_MIN = 'simplescope.'+VERSION+'.bundle.min.htm'
+OUT_FILENAME_MIN_LOCALSTORAGE = 'simplescope.'+VERSION+'.localstorage.bundle.min.htm'
 OUT_FILENAME_MIN_DEMO = 'simplescope.'+VERSION+'.demo.bundle.min.htm'
 
 
@@ -63,7 +63,7 @@ def buildReleaseBundle(out_filename, releaseMode=None):
 					iter_js = iter(fileContent.splitlines())
 					for k in iter_js:
 						# does the line contain a build marker?
-						matchBuildMod = re.match('.*//.*#build:'+releaseMode+':([a-zA-Z0-9_]+)\s*.*', k)
+						matchBuildMod = re.match('.*//.*#build:([a-z]*,)*' + releaseMode + '(,[a-z]*)*:([a-zA-Z0-9_]+)\s*.*', k)
 						if not matchBuildMod is None:
 
 							# ignore line
@@ -74,7 +74,7 @@ def buildReleaseBundle(out_filename, releaseMode=None):
 								'DROP':	drop
 							}
 
-							action = matchBuildMod.group(1)
+							action = matchBuildMod.group(3)
 							actions[action]()
 
 						else:
@@ -126,16 +126,17 @@ def buildReleaseBundle(out_filename, releaseMode=None):
 with open(APP_BASEPATH + 'index.htm', 'r') as srcFile:
 	app_html_data = srcFile.read()
 
-# build default and live demo versions
-buildReleaseBundle(OUT_FILENAME_MIN)
+# build local and live demo versions
+buildReleaseBundle(OUT_FILENAME_MIN_LOCALSTORAGE, 'local')
 buildReleaseBundle(OUT_FILENAME_MIN_DEMO, 'demo')
 
-# store default build bundle in ZIP archive
-zip_filename = OUT_FILENAME_MIN.split('.')
+# store builds in ZIP archive
+zip_filename = OUT_FILENAME_MIN_LOCALSTORAGE.split('.')
 zip_filename.pop()
 zip_filename = '.'.join(zip_filename) + '.zip'
 zf = zipfile.ZipFile(OUT_BASEPATH + zip_filename, 'w')
-zf.write(OUT_BASEPATH + OUT_FILENAME_MIN, OUT_FILENAME_MIN)
+zf.write(OUT_BASEPATH + OUT_FILENAME_MIN_LOCALSTORAGE, OUT_FILENAME_MIN_LOCALSTORAGE)
+zf.write(OUT_BASEPATH + OUT_FILENAME_MIN_DEMO, OUT_FILENAME_MIN_DEMO)
 zf.close()
 
 

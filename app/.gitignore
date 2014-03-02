@@ -1,0 +1,2 @@
+userdata/*.json
+server/node_modules/**/*

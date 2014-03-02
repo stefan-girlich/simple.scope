@@ -1,0 +1,34 @@
+{
+  "name": "simple.scope-server",
+  "version": "0.4.0",
+  "description": "This project contains the server used for serving simple.scope resources and storing/retrieving data.",
+  "main": "server.js",
+  "dependencies": {
+    "restify": "~2.6.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/stefan-girlich/simple.scope"
+  },
+  "keywords": [
+    "notes",
+    "to-do",
+    "to",
+    "do",
+    "organize",
+    "\"getting",
+    "stuff",
+    "done\"",
+    "organization",
+    "organizational",
+    "tool",
+    "server"
+  ],
+  "author": "Stefan Girlich",
+  "license": "none so far"
+}
