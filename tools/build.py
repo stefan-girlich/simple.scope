@@ -10,7 +10,7 @@ import os
 import zipfile
 
 # TODO DYN
-VERSION="0.3_SERVERTEST"
+VERSION="0.4_prelease"
 
 # base path where app resources are stored
 APP_BASEPATH = '../app/'
@@ -66,12 +66,17 @@ def buildReleaseBundle(out_filename, releaseMode=None):
 						matchBuildMod = re.match('.*//.*#build:([a-z]*,)*' + releaseMode + '(,[a-z]*)*:([a-zA-Z0-9_]+)\s*.*', k)
 						if not matchBuildMod is None:
 
-							# ignore line
+							# drop line by not adding it to the final code
 							def drop():
 								pass
 
+							# add line to code by uncommenting
+							def add():
+								pass
+
 							actions = {
-								'DROP':	drop
+								'DROP':	drop,
+								'ADD': add
 							}
 
 							action = matchBuildMod.group(3)

@@ -7,18 +7,27 @@ simplescope.db = simplescope.db || {};
 
 simplescope.db.RemoteStorage = function RemoteStorage() {
 
+	var lastPostReq;
+
 	this.save = function(data, cb) {
 
-		// TODO kill prev req
+		if(lastPostReq && lastPostReq.readyState != 4) {
+			lastPostReq.abort();
+		}
 
-		$.ajax('/api/storage', {
+		lastPostReq = $.ajax('/api/storage', {
 			dataType: 'json',
+			contentType: 'application/json',
 			type: 'POST',
 			data: data,
 			success: function(jqXHR, txtStatus) {
 				cb(jqXHR);
 			},
 			error: function(jqXHR, txtStatus, errThrown) {
+				if(errThrown === 'abort') {
+					// nothing to do here
+					return;
+				}
 				cb(jqXHR.responseText, true);
 			}
 		});
